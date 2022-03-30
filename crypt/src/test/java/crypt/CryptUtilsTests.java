@@ -1,7 +1,7 @@
 //package test.crypt.utils;
 package crypt;
 
-import crypt.utils.*;
+import crypt.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;

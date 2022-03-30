@@ -1,4 +1,4 @@
-package crypt.utils;
+package crypt;
 
 import java.util.Arrays;
 
@@ -38,5 +38,4 @@ public class CryptUtils implements CryptSpecs {
     String result = new String(hash, UTF_8);
     return result;
   }
-
 }

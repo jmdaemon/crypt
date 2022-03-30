@@ -1,6 +1,6 @@
 package crypt.cipher.rsa;
 
-import crypt.utils.*;
+import crypt.*;
 
 import java.security.KeyPairGenerator;
 import java.security.KeyPair;

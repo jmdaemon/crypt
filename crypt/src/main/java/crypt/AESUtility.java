@@ -1,6 +1,6 @@
 package crypt.aes;
 
-import static crypt.utils.CryptUtils.*;
+import static crypt.CryptUtils.*;
 import crypt.data.*;
 
 import javax.crypto.Cipher;
