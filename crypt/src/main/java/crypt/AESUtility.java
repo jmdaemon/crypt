@@ -1,4 +1,4 @@
-package crypt.utils.aes;
+package crypt.aes;
 
 import static crypt.utils.CryptUtils.*;
 import crypt.data.*;
@@ -37,25 +37,10 @@ public class AESUtility implements AESSpecs {
       case IV_SALT:   createDataSalt(); break;
       default:        createDataIV();   break;
     }
-
-    //try {
-    //switch(mode) {
-    //case IV_ONLY:   createDataIV();   break;
-    //case IV_SALT:   createDataSalt(); break;
-    //default:        createDataIV();   break;
-    //}
-    //} catch (Exception e) {
-    //e.printStackTrace();
-    //}
   }
 
   public AESUtility(String pswd) {
     createData(pswd);
-    //try {
-    //createData(pswd);
-    //} catch (Exception e) {
-    //e.printStackTrace();
-    //}
   }
 
   public static SecretKey genKey() {
