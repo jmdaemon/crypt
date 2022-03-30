@@ -67,4 +67,5 @@ jar {
 java {
     withSourcesJar() // Create a sources jar
     withJavadocJar() // Create a jar with the javadocs
+    languageVersion = JavaLanguageVersion.of(17)
 } 
