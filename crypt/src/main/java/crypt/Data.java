@@ -1,6 +1,6 @@
-package app.crypt.data;
+package crypt.data;
 
-import app.crypt.utils.*;
+import crypt.utils.*;
 
 import java.util.Base64;
 import java.io.ByteArrayOutputStream;

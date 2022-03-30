@@ -1,8 +1,9 @@
-package test.crypt.utils.aes;
+//package test.crypt.utils.aes;
+package crypt;
 
-import static app.crypt.utils.CryptUtils.*;
-import app.crypt.data.*;
-import app.crypt.utils.aes.*;
+import static crypt.utils.CryptUtils.*;
+import crypt.data.*;
+import crypt.utils.aes.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;

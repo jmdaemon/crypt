@@ -1,4 +1,4 @@
-package app.crypt.utils.aes;
+package crypt.utils.aes;
 
 public enum CIPHER_MODE {
   IV_ONLY,

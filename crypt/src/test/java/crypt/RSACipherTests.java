@@ -1,7 +1,8 @@
-package test.crypt.cipher.rsa;
+//package test.crypt.cipher.rsa;
+package crypt;
 
-import app.crypt.utils.*;
-import app.crypt.cipher.rsa.*;
+import crypt.utils.*;
+import crypt.cipher.rsa.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;

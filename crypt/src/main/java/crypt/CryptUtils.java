@@ -1,4 +1,4 @@
-package app.crypt.utils;
+package crypt.utils;
 
 import java.util.Arrays;
 

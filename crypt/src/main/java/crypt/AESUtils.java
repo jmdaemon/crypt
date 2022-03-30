@@ -1,7 +1,7 @@
-package app.crypt.utils.aes;
+package crypt.utils.aes;
 
-import static app.crypt.utils.CryptUtils.*;
-import app.crypt.data.*;
+import static crypt.utils.CryptUtils.*;
+import crypt.data.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
