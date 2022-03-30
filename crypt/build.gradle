@@ -36,6 +36,12 @@ testing {
         test {
             // Use JUnit Jupiter test framework
             useJUnitJupiter('5.8.1')
+            maxHeapSize = '1G'
+            testLogging {
+                events "failed"
+                exceptionFormat "full"
+                showStandardStreams = true
+            }
         }
     }
 } 
