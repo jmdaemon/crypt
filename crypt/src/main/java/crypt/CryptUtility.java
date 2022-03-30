@@ -12,9 +12,9 @@ interface CryptSpecs {
   public static final Charset UTF_8 = StandardCharsets.UTF_8;
 }
 
-public class CryptUtils implements CryptSpecs {
+public class CryptUtility implements CryptSpecs {
 
-  public CryptUtils() { }
+  public CryptUtility() { }
 
   private static byte[] genRandomBytes(int len) {
     byte[] randomBytes = new byte[len];

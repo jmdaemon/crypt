@@ -10,7 +10,7 @@ import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-public class Data extends CryptUtils {
+public class Data extends CryptUtility {
   private static byte[] iv;
   private static byte[] salt;
   private static SecretKey key;
@@ -32,11 +32,11 @@ public class Data extends CryptUtils {
 
   public static byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
-    byte[] iv = new byte[CryptUtils.IV_LENGTH];
+    byte[] iv = new byte[CryptUtility.IV_LENGTH];
     bb.get(iv);
     Data.iv = iv;
 
-    byte[] salt = new byte[CryptUtils.SALT_LENGTH];
+    byte[] salt = new byte[CryptUtility.SALT_LENGTH];
     bb.get(salt);
     Data.salt = salt;
 

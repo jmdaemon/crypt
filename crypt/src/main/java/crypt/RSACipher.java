@@ -7,7 +7,7 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class RSACipher extends CryptUtils {
+public class RSACipher extends CryptUtility {
 
   private final int RSA_KEY_LENGTH = 2048;
 

@@ -36,15 +36,21 @@ testing {
         test {
             // Use JUnit Jupiter test framework
             useJUnitJupiter('5.8.1')
-            maxHeapSize = '1G'
-            testLogging {
-                events "failed"
-                exceptionFormat "full"
-                showStandardStreams = true
-            }
+
         }
     }
 } 
+
+test {
+    maxHeapSize = '1G'
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+        showStandardStreams = true
+    }
+    // Fail the 'test' task on the first test failure
+    failFast = true
+}
 
 // Publish new releases
 publishing {
@@ -73,5 +79,8 @@ jar {
 java {
     withSourcesJar() // Create a sources jar
     withJavadocJar() // Create a jar with the javadocs
-    languageVersion = JavaLanguageVersion.of(17)
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+
 } 

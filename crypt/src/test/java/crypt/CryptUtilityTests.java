@@ -6,12 +6,12 @@ import crypt.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
 
-public class CryptUtilsTests {
-  private CryptUtils cutil;
+public class CryptUtilityTests {
+  private CryptUtility cutil;
 
   @BeforeEach
   public void setUp() {
-   this.cutil = new CryptUtils();
+   this.cutil = new CryptUtility();
   }
 
   @Test
