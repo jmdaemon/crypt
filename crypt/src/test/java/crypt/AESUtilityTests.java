@@ -1,4 +1,3 @@
-//package test.crypt.utils.aes;
 package crypt;
 
 import static crypt.utils.CryptUtils.*;
@@ -14,16 +13,16 @@ import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-public class AESUtilsTests { 
-  private AESUtils cipher;
-  private AESUtils cipherIV;
-  private AESUtils cipherSalt;
+public class AESUtilityTests { 
+  private AESUtility cipher;
+  private AESUtility cipherIV;
+  private AESUtility cipherSalt;
 
   @BeforeEach 
   public void setUp() {
-    this.cipher = new AESUtils();
-    this.cipherIV = new AESUtils(CIPHER_MODE.IV_ONLY);
-    this.cipherSalt = new AESUtils(CIPHER_MODE.IV_SALT);
+    this.cipher = new AESUtility();
+    this.cipherIV = new AESUtility(CIPHER_MODE.IV_ONLY);
+    this.cipherSalt = new AESUtility(CIPHER_MODE.IV_SALT);
   }
 
   @Test
@@ -37,19 +36,19 @@ public class AESUtilsTests {
   }
   
   @Test
-  public void encrypt_Plaintext_ReturnAESUtilstext() throws Exception {
+  public void encrypt_Plaintext_ReturnAESUtilitytext() throws Exception {
     byte[] res = cipherIV.encrypt("This is the plaintext");
     assertNotEquals("This is the plaintext", bytesToString(res), "Ciphertext is encrypted");
   }
 
   @Test
-  public void encrypt_IVPlaintext_ReturnAESUtilstext() throws Exception {
+  public void encrypt_IVPlaintext_ReturnAESUtilitytext() throws Exception {
     String res = cipherIV.encryptWithHeader("This is the plaintext");
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
-  public void encrypt_SaltPlaintext_ReturnAESUtilstext() throws Exception {
+  public void encrypt_SaltPlaintext_ReturnAESUtilitytext() throws Exception {
     String res = cipherSalt.encryptWithHeader( bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())) );
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
@@ -68,7 +67,7 @@ public class AESUtilsTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    AESUtils cipherSaltPass = new AESUtils("password");
+    AESUtility cipherSaltPass = new AESUtility("password");
     String ciphertext = cipherSaltPass.encryptWithHeader("This is the plaintext");
     assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
   }

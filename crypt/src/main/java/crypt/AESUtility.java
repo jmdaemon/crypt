@@ -26,12 +26,12 @@ interface AESSpecs {
   static final int AES_KEY_LENGTH = 256;
 }
 
-public class AESUtils implements AESSpecs {
+public class AESUtility implements AESSpecs {
   private Data data;
 
-  public AESUtils() { }
+  public AESUtility() { }
 
-  public AESUtils(CIPHER_MODE mode) {
+  public AESUtility(CIPHER_MODE mode) {
     switch(mode) {
       case IV_ONLY:   createDataIV();   break;
       case IV_SALT:   createDataSalt(); break;
@@ -49,7 +49,7 @@ public class AESUtils implements AESSpecs {
     //}
   }
 
-  public AESUtils(String pswd) {
+  public AESUtility(String pswd) {
     createData(pswd);
     //try {
     //createData(pswd);
