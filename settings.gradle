@@ -10,3 +10,9 @@
 
 rootProject.name = 'crypt'
 include('crypt')
+
+sourceControl {
+    gitRepository("https://github.com/jmdaemon/toolbox.git") {
+        producesModule('io.github.jmdaemon:toolbox')
+    }
+}

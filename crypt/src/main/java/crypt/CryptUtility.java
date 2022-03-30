@@ -1,5 +1,7 @@
 package crypt;
 
+import static toolbox.RandomUtility.generateRandomBytes;
+
 import java.util.Arrays;
 
 import java.security.SecureRandom;
@@ -16,18 +18,13 @@ public class CryptUtility implements CryptSpecs {
 
   public CryptUtility() { }
 
-  private static byte[] genRandomBytes(int len) {
-    byte[] randomBytes = new byte[len];
-    new SecureRandom().nextBytes(randomBytes);
-    return randomBytes;
-  }
 
   public static byte[] genIV() {
-    return genRandomBytes(IV_LENGTH);
+    return toolbox.RandomUtility.generateRandomBytes(IV_LENGTH);
   }
 
   public static byte[] genSalt() {
-    return genRandomBytes(SALT_LENGTH);
+    return toolbox.RandomUtility.generateRandomBytes(SALT_LENGTH);
   }
 
   public static byte[] stringToBytes(String plaintext) {

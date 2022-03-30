@@ -28,6 +28,9 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:30.1.1-jre'
+
+    // My Dependencies
+    implementation 'io.github.jmdaemon:toolbox:0.1.5'
 }
 
 testing {
