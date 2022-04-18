@@ -22,11 +22,10 @@ import java.io.IOException;
 import java.util.Base64;
 
 public class AESUtility {
-  // AES Utility defaults
   // Class Fields
+  // AES Utility defaults
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
   private static final int DEFAULT_KEY_LENGTH = 256;
-
   public static final int DEFAULT_IV_LENGTH = 12;
   public static final int DEFAULT_SALT_LENGTH = 16;
 
@@ -74,12 +73,17 @@ public class AESUtility {
     // Initializes the AES Key generator with the provided defaults
     this.initKeyGen(aesKeyLength, "AES");
     this.setAlgorithm(algorithm);
-    this.setKeyLength(aesKeyLength);
-    this.setIV(withIV ? genIV() : null);
+
     this.setIVLength(ivLength);
-    this.setSalt(withSalt ? genSalt() : null);
+    this.setIV(withIV ? genIV() : null);
+
     this.setSaltLength(saltLength);
+    this.setSalt(withSalt ? genSalt() : null);
+
+    this.setKeyLength(aesKeyLength);
     this.setKey(this.generator.generateKey());
+
+
   }
 
   // Getters
@@ -128,11 +132,11 @@ public class AESUtility {
 
   public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
-    byte[] iv = new byte[DEFAULT_IV_LENGTH];
+    byte[] iv = new byte[this.getIVLength()];
     bb.get(iv);
     this.iv = iv;
 
-    byte[] salt = new byte[DEFAULT_SALT_LENGTH];
+    byte[] salt = new byte[this.getSaltLength()];
     bb.get(salt);
     this.salt = salt;
 
@@ -142,12 +146,11 @@ public class AESUtility {
   }
 
   public byte[] genIV() {
-    //return toolbox.RandomUtility.generateRandomBytes(DEFAULT_IV_LENGTH);
-    return this.random.generateRandomBytes(DEFAULT_IV_LENGTH);
+    return this.random.generateRandomBytes(this.getIVLength());
   }
 
   public byte[] genSalt() {
-    return this.random.generateRandomBytes(DEFAULT_SALT_LENGTH);
+    return this.random.generateRandomBytes(this.getSaltLength());
   }
 
   public static byte[] stringToBytes(String plaintext) {
@@ -158,7 +161,6 @@ public class AESUtility {
     String result = new String(hash, StandardCharsets.UTF_8);
     return result;
   }
-
 
   public static String b64encode(byte[] ciphertext) {
     String result = Base64.getEncoder().encodeToString(ciphertext);
