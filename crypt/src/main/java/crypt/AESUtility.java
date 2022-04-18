@@ -22,7 +22,9 @@ import java.io.IOException;
 /**
   * Encrypt and decrypt messages with the Advanced Encryption Standard
   *
-  * Examples:
+  * <p>
+  *
+  * Examples: 
   * <pre>
   * {@code
   * AESUtility aesUtility = new AESUtility();
