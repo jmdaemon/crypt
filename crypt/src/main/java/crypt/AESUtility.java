@@ -37,23 +37,20 @@ public class AESUtility implements AESSpecs {
     this.initKeyGen();
   }
 
-  //public AESUtility(CIPHER_MODE mode) {
   public AESUtility(boolean withIV, boolean withSalt) {
     this.initKeyGen();
+    byte[] iv = (withIV) ? genIV() : null;
+    byte[] salt = (withSalt) ? genSalt() : null;
     SecretKey key = this.generator.generateKey();
-    init(withIV, withSalt, key);
-    //switch(mode) {
-      //case IV_ONLY: initDataIV(); break;
-      //case IV_SALT: initDataSalt(); break;
-      //default: initDataIV(); break;
-    //}
+    this.data = new Data(iv, salt, key);
   }
 
   public AESUtility(boolean withIV, boolean withSalt, String password) {
     this.initKeyGen();
-    SecretKey key = genPswdKey(password, getSalt());
-    init(withIV, withSalt, key);
-    //this.initData(pswd);
+    byte[] iv = (withIV) ? genIV() : null;
+    byte[] salt = (withSalt) ? genSalt() : null;
+    SecretKey key = genPswdKey(password, salt);
+    this.data = new Data(iv, salt, key);
   }
 
   // Initializes the AES Key generator with the provided defaults
@@ -80,18 +77,10 @@ public class AESUtility implements AESSpecs {
     return this.generator.generateKey();
   }
 
-  public void initDataIV()    { this.data = new Data(genIV(), null, genKey()); }
-  public void initDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); }
-  public void initData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
-
-  //public void init(boolean withIV, boolean withSalt, String password) {
   public void init(boolean withIV, boolean withSalt, SecretKey key) {
     byte[] iv = (withIV) ? genIV() : null;
     byte[] salt = (withSalt) ? genSalt() : null;
     this.data = new Data(iv, salt, key);
-    //Data data = (password != null || password != "")
-      //? new Data(iv, salt, genPswdKey(password, getSalt()))
-      //: new Data(iv, salt, genKey());
   }
 
   public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
