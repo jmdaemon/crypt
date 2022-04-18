@@ -165,19 +165,12 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  //public String decrypt(byte[] ciphertext) throws Exception {
   public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] cipherstring = (withHeader) ? decodeCiphertext(ciphertext) : decodeBase64(ciphertext);
     byte[] result = cipher.doFinal(cipherstring);
     return new String(result, UTF_8);
   }
-
-  //public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
-    //byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
-    //String result = decrypt(ciphertext);
-    //return result;
-  //}
 
   public byte[] getSalt()   { return this.salt;  }
   public byte[] getIV()     { return this.iv;    }
