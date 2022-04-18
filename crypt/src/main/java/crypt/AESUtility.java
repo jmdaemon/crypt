@@ -1,6 +1,13 @@
 package crypt;
 
-import static crypt.CryptUtility.*;
+//import static toolbox.RandomUtility.generateRandomBytes;
+//import toolbox.RandomUtility.generateRandomBytes;
+import toolbox.RandomUtility;
+
+import java.security.SecureRandom;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -23,6 +30,11 @@ public class AESUtility {
   private static final int AES_KEY_LENGTH = 256;
   private static final int TAG_LENGTH_BIT = 128;
 
+  public static final int IV_LENGTH = 12;
+  public static final int SALT_LENGTH = 16;
+  public static final Charset UTF_8 = StandardCharsets.UTF_8;
+
+  private RandomUtility random;
   private byte[] iv;
   private byte[] salt;
 	private KeyGenerator generator;
@@ -115,6 +127,25 @@ public class AESUtility {
     bb.get(result);
     return result;
   }
+
+  public byte[] genIV() {
+    //return toolbox.RandomUtility.generateRandomBytes(IV_LENGTH);
+    return this.random.generateRandomBytes(IV_LENGTH);
+  }
+
+  public byte[] genSalt() {
+    return this.random.generateRandomBytes(SALT_LENGTH);
+  }
+
+  public static byte[] stringToBytes(String plaintext) {
+    return plaintext.getBytes(UTF_8);
+  }
+
+  public static String bytesToString(byte[] hash) {
+    String result = new String(hash, UTF_8);
+    return result;
+  }
+
 
   public static String b64encode(byte[] ciphertext) {
     String result = Base64.getEncoder().encodeToString(ciphertext);
