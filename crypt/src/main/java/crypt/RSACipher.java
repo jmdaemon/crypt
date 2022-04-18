@@ -1,4 +1,4 @@
-package crypt.cipher.rsa;
+package crypt.rsa;
 
 import crypt.*;
 

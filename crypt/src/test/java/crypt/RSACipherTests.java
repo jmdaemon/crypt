@@ -2,7 +2,7 @@
 package crypt;
 
 import crypt.*;
-import crypt.cipher.rsa.*;
+import crypt.rsa.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
