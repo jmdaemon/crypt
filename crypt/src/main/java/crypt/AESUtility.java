@@ -37,17 +37,22 @@ public class AESUtility implements AESSpecs {
     this.initKeyGen();
   }
 
-  public AESUtility(CIPHER_MODE mode) {
+  //public AESUtility(CIPHER_MODE mode) {
+  public AESUtility(boolean withIV, boolean withSalt) {
     this.initKeyGen();
-    switch(mode) {
-      case IV_ONLY: initDataIV(); break;
-      case IV_SALT: initDataSalt(); break;
-      default: initDataIV(); break;
-    }
+    SecretKey key = this.generator.generateKey();
+    init(withIV, withSalt, key);
+    //switch(mode) {
+      //case IV_ONLY: initDataIV(); break;
+      //case IV_SALT: initDataSalt(); break;
+      //default: initDataIV(); break;
+    //}
   }
 
-  public AESUtility(String pswd) {
+  public AESUtility(boolean withIV, boolean withSalt, String password) {
     this.initKeyGen();
+    SecretKey key = genPswdKey(password, getSalt());
+    init(withIV, withSalt, key);
     //this.initData(pswd);
   }
 
@@ -83,7 +88,7 @@ public class AESUtility implements AESSpecs {
   public void init(boolean withIV, boolean withSalt, SecretKey key) {
     byte[] iv = (withIV) ? genIV() : null;
     byte[] salt = (withSalt) ? genSalt() : null;
-    this.data = new Data(iv, salt, genKey());
+    this.data = new Data(iv, salt, key);
     //Data data = (password != null || password != "")
       //? new Data(iv, salt, genPswdKey(password, getSalt()))
       //: new Data(iv, salt, genKey());

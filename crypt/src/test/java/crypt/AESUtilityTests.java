@@ -22,8 +22,8 @@ public class AESUtilityTests {
   @BeforeEach 
   public void setUp() {
     this.cipher = new AESUtility();
-    this.cipherIV = new AESUtility(CIPHER_MODE.IV_ONLY);
-    this.cipherSalt = new AESUtility(CIPHER_MODE.IV_SALT);
+    this.cipherIV = new AESUtility(true, false);
+    this.cipherSalt = new AESUtility(true, true);
 
     //this.cipher.initKeyGen();
     //this.cipherIV.initKeyGen();
@@ -74,7 +74,7 @@ public class AESUtilityTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    AESUtility cipherSaltPass = new AESUtility("password");
+    AESUtility cipherSaltPass = new AESUtility(true, true, "password");
     String ciphertext = cipherSaltPass.encryptWithHeader("This is the plaintext");
     assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
   }
