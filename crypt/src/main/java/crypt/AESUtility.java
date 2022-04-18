@@ -17,13 +17,12 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.io.IOException;
 
-interface AESSpecs {
-  static final String AES_ALGORITHM = "AES/GCM/NoPadding";
-  static final int TAG_LENGTH_BIT = 128;
-  static final int AES_KEY_LENGTH = 256;
-}
+public class AESUtility {
+  // AES Utility defaults
+  private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
+  private static final int AES_KEY_LENGTH = 256;
+  private static final int TAG_LENGTH_BIT = 128;
 
-public class AESUtility implements AESSpecs {
   private byte[] iv;
   private byte[] salt;
 	private KeyGenerator generator;
