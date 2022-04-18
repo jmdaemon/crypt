@@ -2,16 +2,10 @@ package crypt;
 
 // Third Party Packages
 import toolbox.RandomUtility;
-//import static toolbox.Toolbox.*;
-import static toolbox.Toolbox.stringToBytes;
-import static toolbox.Toolbox.bytesToString;
-import static toolbox.Toolbox.b64encode;
-import static toolbox.Toolbox.b64decode;
+import static toolbox.Toolbox.*;
 
 // Standard Library
 import java.nio.ByteBuffer;
-//import java.nio.charset.Charset;
-//import java.nio.charset.StandardCharsets;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -24,7 +18,6 @@ import java.security.spec.InvalidKeySpecException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-//import java.util.Base64;
 
 public class AESUtility {
   // Class Fields
@@ -180,8 +173,7 @@ public class AESUtility {
   public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] cipherstring = (withHeader) ? parseHeader(b64decode(ciphertext)) : b64decode(ciphertext);
-    byte[] result = cipher.doFinal(cipherstring);
-    //return new String(result, StandardCharsets.UTF_8);
-    return bytesToString(result);
+    String result = bytesToString(cipher.doFinal(cipherstring));
+    return result;
   }
 }
