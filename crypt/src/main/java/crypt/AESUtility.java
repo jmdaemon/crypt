@@ -29,7 +29,6 @@ public class AESUtility {
 
   public static final int DEFAULT_IV_LENGTH = 12;
   public static final int DEFAULT_SALT_LENGTH = 16;
-  public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
   // Instance Fields
   private RandomUtility random;
@@ -152,11 +151,11 @@ public class AESUtility {
   }
 
   public static byte[] stringToBytes(String plaintext) {
-    return plaintext.getBytes(UTF_8);
+    return plaintext.getBytes(StandardCharsets.UTF_8);
   }
 
   public static String bytesToString(byte[] hash) {
-    String result = new String(hash, UTF_8);
+    String result = new String(hash, StandardCharsets.UTF_8);
     return result;
   }
 
@@ -167,7 +166,7 @@ public class AESUtility {
   }
 
   public static byte[] b64decode(String ciphertext) {
-    byte[] result = Base64.getDecoder().decode(ciphertext.getBytes(UTF_8));
+    byte[] result = Base64.getDecoder().decode(ciphertext.getBytes(StandardCharsets.UTF_8));
     return result;
   }
 
@@ -195,6 +194,6 @@ public class AESUtility {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] cipherstring = (withHeader) ? parseHeader(b64decode(ciphertext)) : b64decode(ciphertext);
     byte[] result = cipher.doFinal(cipherstring);
-    return new String(result, UTF_8);
+    return new String(result, StandardCharsets.UTF_8);
   }
 }
