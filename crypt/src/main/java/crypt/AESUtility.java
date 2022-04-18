@@ -27,7 +27,7 @@ public class AESUtility {
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
   private static final int DEFAULT_KEY_LENGTH = 256;
 
-  public static final int IV_LENGTH = 12;
+  public static final int DEFAULT_IV_LENGTH = 12;
   public static final int SALT_LENGTH = 16;
   public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
@@ -53,7 +53,7 @@ public class AESUtility {
     * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true, DEFAULT_KEY_LENGTH, DEFAULT_ALGORITHM, IV_LENGTH, SALT_LENGTH);
+    init(true, true, DEFAULT_KEY_LENGTH, DEFAULT_ALGORITHM, DEFAULT_IV_LENGTH, SALT_LENGTH);
   }
 
   /**
@@ -129,7 +129,7 @@ public class AESUtility {
 
   public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
-    byte[] iv = new byte[IV_LENGTH];
+    byte[] iv = new byte[DEFAULT_IV_LENGTH];
     bb.get(iv);
     this.iv = iv;
 
@@ -143,8 +143,8 @@ public class AESUtility {
   }
 
   public byte[] genIV() {
-    //return toolbox.RandomUtility.generateRandomBytes(IV_LENGTH);
-    return this.random.generateRandomBytes(IV_LENGTH);
+    //return toolbox.RandomUtility.generateRandomBytes(DEFAULT_IV_LENGTH);
+    return this.random.generateRandomBytes(DEFAULT_IV_LENGTH);
   }
 
   public byte[] genSalt() {
