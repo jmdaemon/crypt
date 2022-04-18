@@ -25,7 +25,6 @@ public class AESUtility {
   // AES Utility defaults
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
   private static final int DEFAULT_KEY_LENGTH = 256;
-  private static final int TAG_LENGTH_BIT = 128;
 
   public static final int IV_LENGTH = 12;
   public static final int SALT_LENGTH = 16;
@@ -158,9 +157,16 @@ public class AESUtility {
     return result;
   }
 
+  /**
+   * Initializes the cipher in either encryption/decryption mode
+   * @param cipherMode Either Cipher.ENCRYPT_MODE or Cipher.DECRYPT_MODE
+   * @return The initialized cipher
+   * @throws Exception
+  */
   private Cipher initCipher(int cipherMode) throws Exception {
     Cipher result = Cipher.getInstance(DEFAULT_ALGORITHM);
-    result.init(cipherMode, this.getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, this.getIV()));
+    // Note that the tag length bit used for the GCMParameterSpec is always half the aes key length
+    result.init(cipherMode, this.getKey(), new GCMParameterSpec(this.getAesKeyLength() / 2, this.getIV()));
     return result;
   }
 
