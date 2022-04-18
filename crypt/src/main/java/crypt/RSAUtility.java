@@ -1,17 +1,17 @@
 package crypt;
 
-import crypt.*;
+//import crypt.*;
 
 import java.security.KeyPairGenerator;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class RSACipher {
+public class RSAUtility {
 
   private final int RSA_KEY_LENGTH = 2048;
 
-  public RSACipher () {
+  public RSAUtility () {
   }
 
   public KeyPair genKeyPair() throws NoSuchAlgorithmException {

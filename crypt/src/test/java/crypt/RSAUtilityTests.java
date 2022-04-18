@@ -6,12 +6,12 @@ import org.junit.jupiter.api.*;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 
-public class RSACipherTests {
-  private RSACipher cipher;
+public class RSAUtilityTests {
+  private RSAUtility cipher;
 
   @BeforeEach
   public void setUp() {
-    this.cipher = new RSACipher();
+    this.cipher = new RSAUtility();
   }
 
   @Test
