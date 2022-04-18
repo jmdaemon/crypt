@@ -54,7 +54,7 @@ public class AESUtility implements AESSpecs {
     this.initKeyGen();
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
-    this.key = genPswdKey(password, salt);
+    this.key = genPswdKey(password);
   }
 
   private void init(boolean withIV, boolean withSalt, SecretKey key) {
@@ -133,17 +133,17 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
+  public byte[] genPswdHash(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    KeySpec spec = new PBEKeySpec(pswd.toCharArray(), this.salt, ITERATION_COUNT, AES_KEY_LENGTH);
     SecretKeyFactory factory = SecretKeyFactory.getInstance(HASH_ALGORITHM);
     byte[] result = factory.generateSecret(spec).getEncoded();
     return result;
   }
 
-  public static SecretKey genPswdKey(String pswd, byte[] salt) {
+  public SecretKey genPswdKey(String pswd) {
     SecretKey result = null;
     try {
-      result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
+      result = new SecretKeySpec(genPswdHash(pswd), "AES");
     } catch (Exception e) {
       e.printStackTrace();
     }

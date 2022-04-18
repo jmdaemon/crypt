@@ -38,7 +38,8 @@ public class AESUtilityTests {
 
   @Test
   public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-    assertNotNull(cipherSalt.genPswdKey("This is the user password", cipherSalt.getSalt()));
+    //assertNotNull(cipherSalt.genPswdKey("This is the user password", cipherSalt.getSalt()));
+    assertNotNull(cipherSalt.genPswdKey("This is the user password"));
   }
   
   @Test
@@ -55,7 +56,8 @@ public class AESUtilityTests {
 
   @Test
   public void encrypt_SaltPlaintext_ReturnAESUtilitytext() throws Exception {
-    String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())), true);
+    //String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())), true);
+    String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext")), true);
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
