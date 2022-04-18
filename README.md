@@ -5,6 +5,24 @@ Encrypt and decrypt messages.
 Crypt is a thin layer over Java's crypto libraries.
 Crypt provides various tools to encrypt and decrypt messages.
 
+## Usage
+
+Initilization:
+
+``` java
+
+AESUtility aesUtility = new AESUtility();
+AESUtility aesUtilityIVOnly = new AESUtility(true, false, 256, "AES/GCM/NoPadding", 12, 16);
+AESUtility aesUtilityIVandSalt = new AESUtility(true, true, 256, "AES/GCM/NoPadding", 12, 16);
+
+```
+
+Encrypting and Decrypting:
+``` java
+String encryptedMessage = aesUtility.encrypt("This is the plaintext", false);
+String decryptedMessage = aesUtility.decrypt(encryptedMessage, false);
+```
+
 ## Requirements
 
 To build crypt you must have:
