@@ -1,13 +1,12 @@
 package crypt;
 
-//import static toolbox.RandomUtility.generateRandomBytes;
-//import toolbox.RandomUtility.generateRandomBytes;
+// Third Party Packages
 import toolbox.RandomUtility;
 
-import java.security.SecureRandom;
+// Standard Library
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -15,14 +14,12 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.KeyGenerator;
 
 import java.security.SecureRandom;
-import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import java.util.Base64;
 import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
 import java.io.IOException;
+import java.util.Base64;
 
 public class AESUtility {
   // AES Utility defaults
@@ -39,7 +36,7 @@ public class AESUtility {
   private byte[] salt;
 	private KeyGenerator generator;
   private SecretKey key;
-  private int keyLength;
+  private int aesKeyLength;
 
   /**
     * AESUtility constructors
@@ -57,20 +54,20 @@ public class AESUtility {
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
   */
-  public AESUtility(boolean withIV, boolean withSalt, int keyLength) {
-    init(withIV, withSalt, keyLength);
+  public AESUtility(boolean withIV, boolean withSalt, int aesKeyLength) {
+    init(withIV, withSalt, aesKeyLength);
   }
 
   /**
    * Initializes the AESUtility
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
-   * @param keyLength The The key length to use for the AES cipher key.
+   * @param aesKeyLength The The key length to use for the AES cipher key.
   */
-  private void init(boolean withIV, boolean withSalt, int keyLength) {
+  private void init(boolean withIV, boolean withSalt, int aesKeyLength) {
     // Initializes the AES Key generator with the provided defaults
-    this.initKeyGen(keyLength, "AES");
-    this.setKeyLength(keyLength);
+    this.initKeyGen(aesKeyLength, "AES");
+    this.setKeyLength(aesKeyLength);
     this.setIV(withIV ? genIV() : null);
     this.setSalt(withSalt ? genSalt() : null);
     this.setKey(this.generator.generateKey());
@@ -85,14 +82,14 @@ public class AESUtility {
   public void setKey(SecretKey key) { this.key = key; }
   public void setIV(byte[] iv)      { this.iv = iv; }
   public void setSalt(byte[] salt)  { this.salt = salt; }
-  public void setKeyLength(int keyLength)  { this.keyLength = keyLength; }
+  public void setKeyLength(int aesKeyLength)  { this.aesKeyLength = aesKeyLength; }
 
   // Initializes the AES key generator
-	private void initKeyGen(int keyLength, String algorithm) {
+	private void initKeyGen(int aesKeyLength, String algorithm) {
     KeyGenerator keyGen = null;
     try {
       keyGen = KeyGenerator.getInstance(algorithm);
-      keyGen.init(keyLength, SecureRandom.getInstanceStrong());
+      keyGen.init(aesKeyLength, SecureRandom.getInstanceStrong());
       this.generator = keyGen;
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
