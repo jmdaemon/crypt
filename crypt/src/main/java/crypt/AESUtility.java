@@ -115,11 +115,11 @@ public class AESUtility {
 
   public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
-    byte[] iv = new byte[CryptUtility.IV_LENGTH];
+    byte[] iv = new byte[IV_LENGTH];
     bb.get(iv);
     this.iv = iv;
 
-    byte[] salt = new byte[CryptUtility.SALT_LENGTH];
+    byte[] salt = new byte[SALT_LENGTH];
     bb.get(salt);
     this.salt = salt;
 

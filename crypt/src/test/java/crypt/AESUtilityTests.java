@@ -1,6 +1,6 @@
 package crypt;
 
-import static crypt.CryptUtility.*;
+//import static crypt.CryptUtility.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
@@ -19,6 +19,16 @@ public class AESUtilityTests {
     this.cipher = new AESUtility();
     this.cipherIV = new AESUtility(true, false, 256);
     this.cipherSalt = new AESUtility(true, true, 256);
+  }
+
+  @Test
+  public void genSalt() {
+    assertNotNull(this.cipher.genSalt(), "Salt should be initialized");
+  }
+
+  @Test
+  public void genIV() {
+    assertNotNull(this.cipher.genIV(), "IV should be initialized");
   }
 
   @Test
