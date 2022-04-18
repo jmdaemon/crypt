@@ -24,7 +24,7 @@ import java.util.Base64;
 public class AESUtility {
   // AES Utility defaults
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
-  private static final int AES_KEY_LENGTH = 256;
+  private static final int DEFAULT_KEY_LENGTH = 256;
   private static final int TAG_LENGTH_BIT = 128;
 
   public static final int IV_LENGTH = 12;
@@ -47,7 +47,7 @@ public class AESUtility {
     * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true, AES_KEY_LENGTH, DEFAULT_ALGORITHM);
+    init(true, true, DEFAULT_KEY_LENGTH, DEFAULT_ALGORITHM);
   }
 
   /**
