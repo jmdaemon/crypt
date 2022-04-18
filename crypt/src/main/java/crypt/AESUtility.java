@@ -19,20 +19,27 @@ import java.security.spec.InvalidKeySpecException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+  * Encrypt and decrypt messages with the Advanced Encryption Standard
+  *
+  * Examples:
+  * <pre>
+  * {@code
+  * AESUtility aesUtility = new AESUtility();
+  * AESUtility aesUtilityIVOnly = new AESUtility(true, false, 256, "AES/GCM/NoPadding", 12, 16);
+  * AESUtility aesUtilityIVandSalt = new AESUtility(true, true, 256, "AES/GCM/NoPadding", 12, 16);
+  * }
+  * </pre>
+  *  
+  * Encrypting and Decrypting:
+  * <pre>
+  * {@code
+  * String encryptedMessage = aesUtility.encrypt("This is the plaintext", false);
+  * String decryptedMessage = aesUtility.decrypt(encryptedMessage, false);
+  * }
+  * </pre>
+  */
 public class AESUtility {
-  /**
-    * Encrypt and decrypt messages with the Advanced Encryption Standard
-    *
-    * <h3>Examples:</h3>
-    * AESUtility aesUtility = new AESUtility();
-    * AESUtility aesUtilityIVOnly = new AESUtility(true, false, 256, "AES/GCM/NoPadding", 12, 16);
-    * AESUtility aesUtilityIVandSalt = new AESUtility(true, true, 256, "AES/GCM/NoPadding", 12, 16);
-    *
-    * <h3>Encrypting and Decrypting</h3>
-    * String encryptedMessage = aesUtility.encrypt("This is the plaintext", false);
-    * String decryptedMessage = aesUtility.decrypt(encryptedMessage, false);
-    */
-
   // Class Fields
   // AES Utility defaults
 
