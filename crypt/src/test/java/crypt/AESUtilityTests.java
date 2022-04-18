@@ -17,8 +17,8 @@ public class AESUtilityTests {
   @BeforeEach 
   public void setUp() {
     this.cipher = new AESUtility();
-    this.cipherIV = new AESUtility(true, false, 256);
-    this.cipherSalt = new AESUtility(true, true, 256);
+    this.cipherIV = new AESUtility(true, false, 256, "AES/GCM/NoPadding");
+    this.cipherSalt = new AESUtility(true, true, 256, "AES/GCM/NoPadding");
   }
 
   @Test
@@ -63,7 +63,7 @@ public class AESUtilityTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    AESUtility cipherSaltPass = new AESUtility(true, true, 256);
+    AESUtility cipherSaltPass = new AESUtility(true, true, 256, "AES/GCM/NoPadding");
     String ciphertext = cipherSaltPass.encrypt("This is the plaintext", true);
     assertEquals("This is the plaintext", cipherSaltPass.decrypt(ciphertext, true));
   }

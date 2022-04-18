@@ -36,6 +36,7 @@ public class AESUtility {
   private byte[] salt;
 	private KeyGenerator generator;
   private SecretKey key;
+  private String algorithm;
   private int aesKeyLength;
 
   /**
@@ -46,7 +47,7 @@ public class AESUtility {
     * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true, AES_KEY_LENGTH);
+    init(true, true, AES_KEY_LENGTH, AES_ALGORITHM);
   }
 
   /**
@@ -54,8 +55,8 @@ public class AESUtility {
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
   */
-  public AESUtility(boolean withIV, boolean withSalt, int aesKeyLength) {
-    init(withIV, withSalt, aesKeyLength);
+  public AESUtility(boolean withIV, boolean withSalt, int aesKeyLength, String algorithm) {
+    init(withIV, withSalt, aesKeyLength, algorithm);
   }
 
   /**
@@ -64,7 +65,7 @@ public class AESUtility {
    * @param withSalt Generate a salt
    * @param aesKeyLength The The key length to use for the AES cipher key.
   */
-  private void init(boolean withIV, boolean withSalt, int aesKeyLength) {
+  private void init(boolean withIV, boolean withSalt, int aesKeyLength, String algorithm) {
     // Initializes the AES Key generator with the provided defaults
     this.initKeyGen(aesKeyLength, "AES");
     this.setKeyLength(aesKeyLength);
@@ -74,15 +75,18 @@ public class AESUtility {
   }
 
   // Getters
-  public byte[] getSalt()   { return this.salt;  }
-  public byte[] getIV()     { return this.iv;    }
-  public SecretKey getKey() { return this.key;   }
+  public byte[] getSalt()           { return this.salt;  }
+  public byte[] getIV()             { return this.iv;    }
+  public SecretKey getKey()         { return this.key;   }
+  public int getAesKeyLength()      { return this.aesKeyLength; }
+  public String getAlgorithm()      { return this.algorithm; }
 
   // Setters
   public void setKey(SecretKey key) { this.key = key; }
   public void setIV(byte[] iv)      { this.iv = iv; }
   public void setSalt(byte[] salt)  { this.salt = salt; }
   public void setKeyLength(int aesKeyLength)  { this.aesKeyLength = aesKeyLength; }
+  public void setAlgorithm(String algorithm)  { this.algorithm = algorithm; }
 
   // Initializes the AES key generator
 	private void initKeyGen(int aesKeyLength, String algorithm) {
