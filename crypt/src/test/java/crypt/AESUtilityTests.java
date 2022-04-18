@@ -24,6 +24,10 @@ public class AESUtilityTests {
     this.cipher = new AESUtility();
     this.cipherIV = new AESUtility(CIPHER_MODE.IV_ONLY);
     this.cipherSalt = new AESUtility(CIPHER_MODE.IV_SALT);
+
+    //this.cipher.initKeyGen();
+    //this.cipherIV.initKeyGen();
+    //this.cipherSalt.initKeyGen();
   }
 
   @Test

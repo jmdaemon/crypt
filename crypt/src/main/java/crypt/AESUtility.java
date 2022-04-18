@@ -11,6 +11,8 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.KeyGenerator;
+import javax.crypto.KeyGeneratorSpi;
+
 import java.security.SecureRandom;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
@@ -29,31 +31,57 @@ interface AESSpecs {
 
 public class AESUtility implements AESSpecs {
   private Data data;
+  private static KeyGenerator keyGen = initKeyGen();
 
-  public AESUtility() { }
+  public AESUtility() {
+    //this.initKeyGen();
+  }
 
   public AESUtility(CIPHER_MODE mode) {
     switch(mode) {
-      case IV_ONLY:   createDataIV();   break;
-      case IV_SALT:   createDataSalt(); break;
-      default:        createDataIV();   break;
+      case IV_ONLY:   this.createDataIV();   break;
+      case IV_SALT:   this.createDataSalt(); break;
+      default:        this.createDataIV();   break;
     }
+    //this.initKeyGen();
   }
 
   public AESUtility(String pswd) {
-    createData(pswd);
+    this.createData(pswd);
+    //this.initKeyGen();
   }
 
-  public static SecretKey genKey() {
+
+  // Initializes the AES key generator
+  //public void initKeyGen() throws NoSuchAlgorithmException {
+  //public void initKeyGen() {
+  public static KeyGenerator initKeyGen() {
+    //this.keyGen = this.getKeyGen();
+    //this.keyGen = this.getKeyGen();
+    //this.keyGen = null;
+    //KeyGenerator keyGen = this.getKeyGen();
     KeyGenerator keyGen = null;
     try {
+      //this.keyGen = KeyGenerator.getInstance("AES");
+      //this.keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
       keyGen = KeyGenerator.getInstance("AES");
       keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
+      //this.keyGen = keyGen;
     } catch (Exception e) {
       e.printStackTrace();
     }
-    if (isNull(keyGen)) { System.exit(1); }
-    return keyGen.generateKey();
+    return keyGen;
+  }
+
+  // Generate the AES key 
+  public SecretKey genKey() {
+    //initKeyGen();
+    // Ensure the key generator is not null
+    //if (isNull(this.keyGen)) { System.exit(1); }
+    //if (isNull(this.getKeyGen())) { System.exit(1); }
+    SecretKey key = this.keyGen.generateKey();
+    //return this.getKeyGen().generateKey();
+    return key;
   }
 
   public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -116,6 +144,7 @@ public class AESUtility implements AESSpecs {
   public byte[] getSalt()   { return data.getSalt();  }
   public byte[] getIV()     { return data.getIV();    }
   public SecretKey getKey() { return data.getKey();   }
+  public KeyGenerator getKeyGen() { return this.keyGen; }
 
   public void setKey(SecretKey key) { data.setKey(key); }
   }
