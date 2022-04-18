@@ -74,6 +74,7 @@ public class AESUtility {
   /**
     * Default AESUtility constructor
     *
+    * <p>
     * Initializes the AESUtility with our specified defaults
     */
   public AESUtility() {
@@ -82,7 +83,8 @@ public class AESUtility {
 
   /**
    * Normal AESUtility constructor
-   *
+   * 
+   * <p>
    * Initializes the AESUtility with the specified options
    * 
    * @param withIV Generate an initilization vector
@@ -98,6 +100,7 @@ public class AESUtility {
 
   /**
    * Initializes the AESUtility
+   * 
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
    * @param aesKeyLength The specified AES key length
@@ -141,6 +144,7 @@ public class AESUtility {
 
   /**
    * Initializes the AES key generator
+   *
    * @param aesKeyLength The length of key to use for the AES algorithm. Default: 256.
    * @param algorithm The specific AES algorithm implementation to use. Default: AES/GCM/NoPadding.
   */
@@ -157,6 +161,7 @@ public class AESUtility {
 
   /**
    * Generate the symmetric AES key 
+   *
    * @return The generated AES key from the specified AES implementation
   */
   public SecretKey genKey() {
@@ -165,6 +170,7 @@ public class AESUtility {
 
   /**
    * Pack the ciphertext into a byte header containing the IV and the salt
+   *
    * @param ciphertext The encrypted ciphertext
    * @return A byte[] containing the packed IV and salt.
    * @throws IOException An IOException is thrown if output is unable to be written to
@@ -180,6 +186,7 @@ public class AESUtility {
 
   /**
    * Unpacks the header into a byte array containing the plaintext
+   *
    * @param decodedCiphertext The decoded base64 byte header
    * @return The decrypted plaintext
   */
@@ -200,6 +207,7 @@ public class AESUtility {
 
   /**
    * Generate the Initilization Vector (IV)
+   *
    * @return The initialization vector
   */
   public byte[] genIV() {
@@ -208,6 +216,7 @@ public class AESUtility {
 
   /**
    * Generate the salt
+   *
    * @return The salt array
   */
   public byte[] genSalt() {
@@ -216,6 +225,7 @@ public class AESUtility {
 
   /**
    * Initializes the cipher in either encryption/decryption mode
+   *
    * @param cipherMode Either Cipher.ENCRYPT_MODE or Cipher.DECRYPT_MODE
    * @return The initialized cipher
    * @throws Exception A general exception
@@ -229,6 +239,7 @@ public class AESUtility {
 
   /**
    * Returns the plaintext encrypted with the AES algorithm
+   *
    * @param plaintext The data message to encrypt
    * @param withHeader Pack data message into a header containing the iv and salt
    * @return The encrypted ciphertext
@@ -243,6 +254,7 @@ public class AESUtility {
 
   /**
    * Returns the plaintext decrypted with the AES algorithm
+   *
    * @param ciphertext The encrypted ciphertext
    * @param withHeader Unpack data message from a header containing the iv and the salt
    * @return The unencrypted plaintext message
