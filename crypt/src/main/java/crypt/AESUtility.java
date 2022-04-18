@@ -41,32 +41,44 @@ public class AESUtility implements AESSpecs {
   private SecretKey key;
 
   public AESUtility() {
-    this.initKeyGen();
-    init(genIV(), genSalt(), this.generator.generateKey());
+    //this.initKeyGen();
+    //init(genIV(), genSalt(), this.generator.generateKey());
+    //init(genIV(), genSalt(), this.generator.generateKey(), "");
+    //init(true, true, "");
+    init(true, true, false, "");
   }
 
-  public AESUtility(boolean withIV, boolean withSalt) {
-    this.initKeyGen();
-    init(withIV, withSalt, this.generator.generateKey());
+  public AESUtility(boolean withIV, boolean withSalt, boolean withPassword) {
+    //init(withIV, withSalt, "");
+    init(withIV, withSalt, withPassword, "");
+    //this.initKeyGen();
+    //init(withIV, withSalt, this.generator.generateKey());
   }
 
-  public AESUtility(boolean withIV, boolean withSalt, String password) {
+  public AESUtility(boolean withIV, boolean withSalt, boolean withPassword, String password) {
+    //init(withIV, withSalt, password);
+    init(withIV, withSalt, withPassword, password);
+    //this.initKeyGen();
+    ////init(withIV, withSalt, genPswdKey(password));
+    //this.iv = (withIV) ? genIV() : null;
+    //this.salt = (withSalt) ? genSalt() : null;
+    //this.key = genPswdKey(password);
+  }
+
+  //private void init(boolean withIV, boolean withSalt, String password) {
+  private void init(boolean withIV, boolean withSalt, boolean withPassword, String password) {
     this.initKeyGen();
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
-    this.key = genPswdKey(password);
+    //this.key = (password.equals("")) ? genPswdKey(password) : this.generator.generateKey();
+    this.key = (withPassword) ? genPswdKey(password) : this.generator.generateKey();
   }
 
-  private void init(boolean withIV, boolean withSalt, SecretKey key) {
-    this.iv = (withIV) ? genIV() : null;
-    this.salt = (withSalt) ? genSalt() : null;
-    this.key = key;
-  }
-
-  private void init(byte[] iv, byte[] salt, SecretKey key) {
-    this.iv = iv;
-    this.salt = salt; this.key = key;
-  }
+  //private void init(byte[] iv, byte[] salt, SecretKey key) {
+    //this.iv = iv;
+    //this.salt = salt;
+    //this.key = key;
+  //}
 
   // Initializes the AES Key generator with the provided defaults
   private void initKeyGen() {
