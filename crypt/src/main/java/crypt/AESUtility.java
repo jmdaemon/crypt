@@ -139,9 +139,13 @@ public class AESUtility implements AESSpecs {
     return new String(result, UTF_8);
   }
 
+  // Getters
   public byte[] getSalt()   { return this.salt;  }
   public byte[] getIV()     { return this.iv;    }
   public SecretKey getKey() { return this.key;   }
 
-  public void setKey(SecretKey key) { this.setKey(key); }
+  // Setters
+  public void setKey(SecretKey key) { this.key = key; }
+  public void setIV(byte[] iv)      { this.iv = iv; }
+  public void setSalt(byte[] salt)  { this.salt = salt; }
   }
