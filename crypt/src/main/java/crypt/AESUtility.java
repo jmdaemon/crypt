@@ -3,7 +3,7 @@ package crypt;
 import static crypt.CryptUtility.*;
 
 import crypt.*;
-import crypt.CIPHER_MODE;
+//import crypt.CIPHER_MODE;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -158,29 +158,33 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  public byte[] encrypt(String plaintext) throws Exception {
+  public String encrypt(String plaintext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
-    byte[] result = cipher.doFinal(stringToBytes(plaintext));
+    byte[] ciphertext = cipher.doFinal(stringToBytes(plaintext));
+    //String result = (withHeader) ? encodeBase64(genHeader(ciphertext)) : bytesToString(ciphertext);
+    String result = (withHeader) ? encodeBase64(genHeader(ciphertext)) : encodeBase64(ciphertext);
     return result;
   }
 
-  public String encryptWithHeader(String plaintext) throws Exception {
-    byte[] ciphertext = encrypt(plaintext);
-    byte[] result = genHeader(ciphertext);
-    return encodeBase64(result);
-  }
+  //public String encryptWithHeader(String plaintext) throws Exception {
+    //byte[] ciphertext = encrypt(plaintext);
+    //byte[] result = genHeader(ciphertext);
+    //return encodeBase64(result);
+  //}
 
-  public String decrypt(byte[] ciphertext) throws Exception {
+  //public String decrypt(byte[] ciphertext) throws Exception {
+  public String decrypt(String ciphertext) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
-    byte[] result = cipher.doFinal(ciphertext);
+    byte[] cipherstring = decodeBase64(ciphertext);
+    byte[] result = cipher.doFinal(cipherstring);
     return new String(result, UTF_8);
   }
 
-  public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
-    byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
-    String result = decrypt(ciphertext);
-    return result;
-  }
+  //public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
+    //byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
+    //String result = decrypt(ciphertext);
+    //return result;
+  //}
 
   public byte[] getSalt()   { return this.salt;  }
   public byte[] getIV()     { return this.iv;    }

@@ -2,7 +2,7 @@ package crypt;
 
 import static crypt.CryptUtility.*;
 import crypt.*;
-import crypt.CIPHER_MODE;
+//import crypt.CIPHER_MODE;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
@@ -43,39 +43,40 @@ public class AESUtilityTests {
   
   @Test
   public void encrypt_Plaintext_ReturnAESUtilitytext() throws Exception {
-    byte[] res = cipherIV.encrypt("This is the plaintext");
-    assertNotEquals("This is the plaintext", bytesToString(res), "Ciphertext is encrypted");
+    String res = cipherIV.encrypt("This is the plaintext", false);
+    assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
   public void encrypt_IVPlaintext_ReturnAESUtilitytext() throws Exception {
-    String res = cipherIV.encryptWithHeader("This is the plaintext");
+    String res = cipherIV.encrypt("This is the plaintext", false);
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
   public void encrypt_SaltPlaintext_ReturnAESUtilitytext() throws Exception {
-    String res = cipherSalt.encryptWithHeader( bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())) );
+    String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())), true);
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
-    byte[] ciphertext = cipher.encrypt("This is the plaintext");
+    String ciphertext = cipher.encrypt("This is the plaintext", false);
+    //assertEquals("This is the plaintext", cipher.decrypt(stringToBytes(ciphertext)));
     assertEquals("This is the plaintext", cipher.decrypt(ciphertext));
   }
 
-  @Test 
-  public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    String res = cipherSalt.decryptWithHeader(cipherSalt.encryptWithHeader("This is the plaintext"));
-    assertEquals("This is the plaintext", res);
-  }
+  //@Test 
+  //public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
+    //String res = cipherSalt.decryptWithHeader(cipherSalt.encrypt("This is the plaintext", true));
+    //assertEquals("This is the plaintext", res);
+  //}
 
-  @Test 
-  public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    AESUtility cipherSaltPass = new AESUtility(true, true, "password");
-    String ciphertext = cipherSaltPass.encryptWithHeader("This is the plaintext");
-    assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
-  }
+  //@Test 
+  //public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
+    //AESUtility cipherSaltPass = new AESUtility(true, true, "password");
+    //String ciphertext = cipherSaltPass.encrypt("This is the plaintext", true);
+    //assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
+  //}
   
 }
