@@ -59,15 +59,11 @@ public class AESUtility implements AESSpecs {
   }
 
   private void init(boolean withIV, boolean withSalt) {
-    this.initKeyGen();
+    // Initializes the AES Key generator with the provided defaults
+    this.initKeyGen(AES_KEY_LENGTH, "AES");
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
     this.key = this.generator.generateKey();
-  }
-
-  // Initializes the AES Key generator with the provided defaults
-  private void initKeyGen() {
-    this.initKeyGen(AES_KEY_LENGTH, "AES");
   }
 
   // Initializes the AES key generator
