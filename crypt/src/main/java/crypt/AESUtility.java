@@ -22,6 +22,15 @@ import java.io.IOException;
 public class AESUtility {
   /**
     * Encrypt and decrypt messages with the Advanced Encryption Standard
+    *
+    * <h3>Examples:</h3>
+    * AESUtility aesUtility = new AESUtility();
+    * AESUtility aesUtilityIVOnly = new AESUtility(true, false, 256, "AES/GCM/NoPadding", 12, 16);
+    * AESUtility aesUtilityIVandSalt = new AESUtility(true, true, 256, "AES/GCM/NoPadding", 12, 16);
+    *
+    * <h3>Encrypting and Decrypting</h3>
+    * String encryptedMessage = aesUtility.encrypt("This is the plaintext", false);
+    * String decryptedMessage = aesUtility.decrypt(encryptedMessage, false);
     */
 
   // Class Fields
@@ -54,11 +63,9 @@ public class AESUtility {
   private int saltLength;
 
   /**
-    * AESUtility constructors
-    * 
-    * These constructors provide different defaults:
-    * - Default constructor   : Initialize the AESUtility with an IV and salt
-    * - Normal constructor    : Initialize the AESUtility with the specified options
+    * Default AESUtility constructor
+    *
+    * Initializes the AESUtility with our specified defaults
     */
   public AESUtility() {
     init(true, true, DEFAULT_KEY_LENGTH, DEFAULT_ALGORITHM, DEFAULT_IV_LENGTH, DEFAULT_SALT_LENGTH);
@@ -66,8 +73,15 @@ public class AESUtility {
 
   /**
    * Normal AESUtility constructor
+   *
+   * Initializes the AESUtility with the specified options
+   * 
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
+   * @param aesKeyLength The specified AES key length
+   * @param algorithm The specified AES encryption algorithm
+   * @param ivLength The length of the initilization vector
+   * @param saltLength The length of the salt array
   */
   public AESUtility(boolean withIV, boolean withSalt, int aesKeyLength, String algorithm, int ivLength, int saltLength) {
     init(withIV, withSalt, aesKeyLength, algorithm, ivLength, saltLength);
@@ -77,7 +91,10 @@ public class AESUtility {
    * Initializes the AESUtility
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
-   * @param aesKeyLength The The key length to use for the AES cipher key.
+   * @param aesKeyLength The specified AES key length
+   * @param algorithm The specified AES encryption algorithm
+   * @param ivLength The length of the initilization vector
+   * @param saltLength The length of the salt array
   */
   private void init(boolean withIV, boolean withSalt, int aesKeyLength, String algorithm, int ivLength, int saltLength) {
     // Initializes the AES Key generator with the provided defaults
