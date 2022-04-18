@@ -119,12 +119,6 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  public byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] decodedCiphertext = b64decode(ciphertextWithHeader);
-    byte[] result = parseHeader(decodedCiphertext);
-    return result;
-  }
-
   private Cipher initCipher(int cipherMode) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
     result.init(cipherMode, this.getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, this.getIV()));
@@ -140,7 +134,7 @@ public class AESUtility implements AESSpecs {
 
   public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
-    byte[] cipherstring = (withHeader) ? decodeCiphertext(ciphertext) : b64decode(ciphertext);
+    byte[] cipherstring = (withHeader) ? parseHeader(b64decode(ciphertext)) : b64decode(ciphertext);
     byte[] result = cipher.doFinal(cipherstring);
     return new String(result, UTF_8);
   }
