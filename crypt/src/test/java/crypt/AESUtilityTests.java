@@ -1,14 +1,10 @@
 package crypt;
 
 import static crypt.CryptUtility.*;
-import crypt.*;
-//import crypt.CIPHER_MODE;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-import java.util.Base64;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -23,22 +19,16 @@ public class AESUtilityTests {
     this.cipher = new AESUtility();
     this.cipherIV = new AESUtility(true, false, false);
     this.cipherSalt = new AESUtility(true, true, true);
-
-    //this.cipher.initKeyGen();
-    //this.cipherIV.initKeyGen();
-    //this.cipherSalt.initKeyGen();
   }
 
   @Test
   public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
     SecretKey key = cipher.genKey();
-    //assertNotNull(cipher.genKey());
     assertNotNull(key);
   }
 
   @Test
   public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-    //assertNotNull(cipherSalt.genPswdKey("This is the user password", cipherSalt.getSalt()));
     assertNotNull(cipherSalt.genPswdKey("This is the user password"));
   }
   
@@ -56,7 +46,6 @@ public class AESUtilityTests {
 
   @Test
   public void encrypt_SaltPlaintext_ReturnAESUtilitytext() throws Exception {
-    //String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())), true);
     String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext")), true);
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
@@ -64,7 +53,6 @@ public class AESUtilityTests {
   @Test
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
     String ciphertext = cipher.encrypt("This is the plaintext", false);
-    //assertEquals("This is the plaintext", cipher.decrypt(stringToBytes(ciphertext)));
     assertEquals("This is the plaintext", cipher.decrypt(ciphertext, false));
   }
 
@@ -76,10 +64,8 @@ public class AESUtilityTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    //AESUtility cipherSaltPass = new AESUtility(true, true, "password");
     AESUtility cipherSaltPass = new AESUtility(true, true, true, "password");
     String ciphertext = cipherSaltPass.encrypt("This is the plaintext", true);
     assertEquals("This is the plaintext", cipherSaltPass.decrypt(ciphertext, true));
   }
-  
 }

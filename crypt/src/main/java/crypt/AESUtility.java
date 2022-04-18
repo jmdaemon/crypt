@@ -40,45 +40,44 @@ public class AESUtility implements AESSpecs {
 	private KeyGenerator generator;
   private SecretKey key;
 
+  /**
+    * AESUtility constructors
+    * 
+    * These constructors provide different defaults:
+    * - Default constructor   : Initialize the AESUtility with an IV and salt
+    * - Normal constructor    : Initialize the AESUtility with the specified options
+    * - Password constructor  : Initialize the AESUtility with the specified options and a password key
+    */
   public AESUtility() {
-    //this.initKeyGen();
-    //init(genIV(), genSalt(), this.generator.generateKey());
-    //init(genIV(), genSalt(), this.generator.generateKey(), "");
-    //init(true, true, "");
     init(true, true, false, "");
   }
-
+  /**
+   * Normal AESUtility constructor
+   * @param withIV Generate an initilization vector
+   * @param withSalt Generate a salt
+   * @param withPassword Generate a normal key or a key derived from a hashed password
+  */
   public AESUtility(boolean withIV, boolean withSalt, boolean withPassword) {
-    //init(withIV, withSalt, "");
     init(withIV, withSalt, withPassword, "");
-    //this.initKeyGen();
-    //init(withIV, withSalt, this.generator.generateKey());
   }
 
+  /**
+   * Password AESUtility constructor
+   * @param withIV Generate an initilization vector
+   * @param withSalt Generate a salt
+   * @param withPassword Generate a normal key or a key derived from a hashed password
+   * @param password The password to hash
+  */
   public AESUtility(boolean withIV, boolean withSalt, boolean withPassword, String password) {
-    //init(withIV, withSalt, password);
     init(withIV, withSalt, withPassword, password);
-    //this.initKeyGen();
-    ////init(withIV, withSalt, genPswdKey(password));
-    //this.iv = (withIV) ? genIV() : null;
-    //this.salt = (withSalt) ? genSalt() : null;
-    //this.key = genPswdKey(password);
   }
 
-  //private void init(boolean withIV, boolean withSalt, String password) {
   private void init(boolean withIV, boolean withSalt, boolean withPassword, String password) {
     this.initKeyGen();
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
-    //this.key = (password.equals("")) ? genPswdKey(password) : this.generator.generateKey();
     this.key = (withPassword) ? genPswdKey(password) : this.generator.generateKey();
   }
-
-  //private void init(byte[] iv, byte[] salt, SecretKey key) {
-    //this.iv = iv;
-    //this.salt = salt;
-    //this.key = key;
-  //}
 
   // Initializes the AES Key generator with the provided defaults
   private void initKeyGen() {
@@ -103,7 +102,6 @@ public class AESUtility implements AESSpecs {
     if (isNull(this.generator)) { System.exit(1); }
     return this.generator.generateKey();
   }
-
 
   public byte[] createHeader(byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
