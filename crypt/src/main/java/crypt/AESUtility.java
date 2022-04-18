@@ -109,7 +109,7 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  public static String encodeBase64(byte[] ciphertext) {
+  public static String b64encode(byte[] ciphertext) {
     String result = Base64.getEncoder().encodeToString(ciphertext);
     return result;
   }
@@ -134,7 +134,7 @@ public class AESUtility implements AESSpecs {
   public String encrypt(String plaintext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
     byte[] ciphertext = cipher.doFinal(stringToBytes(plaintext));
-    String result = (withHeader) ? encodeBase64(createHeader(ciphertext)) : encodeBase64(ciphertext);
+    String result = (withHeader) ? b64encode(createHeader(ciphertext)) : b64encode(ciphertext);
     return result;
   }
 

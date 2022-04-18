@@ -27,25 +27,25 @@ public class CryptUtilityTests {
   public void decrypt_(){
   }
   
-  //public void encodeBase64_(){
+  //public void b64encode_(){
   //}
 
   //public void decodeBase64_(){
   //}
 
-  //public void encodeBase64_Salt(){
+  //public void b64encode_Salt(){
   //}
 
   //public void decodeBase64_Salt(){
   //}
 
-  //public void encodeBase64_IV(){
+  //public void b64encode_IV(){
   //}
 
   //public void decodeBase64_IV(){
   //}
 
-  //public void encodeBase64_IVSalt(){
+  //public void b64encode_IVSalt(){
   //}
 
   //public void decodeBase64_IVSalt(){
