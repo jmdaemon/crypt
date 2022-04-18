@@ -28,7 +28,7 @@ public class AESUtility {
   private static final int DEFAULT_KEY_LENGTH = 256;
 
   public static final int DEFAULT_IV_LENGTH = 12;
-  public static final int SALT_LENGTH = 16;
+  public static final int DEFAULT_SALT_LENGTH = 16;
   public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
   // Instance Fields
@@ -53,7 +53,7 @@ public class AESUtility {
     * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true, DEFAULT_KEY_LENGTH, DEFAULT_ALGORITHM, DEFAULT_IV_LENGTH, SALT_LENGTH);
+    init(true, true, DEFAULT_KEY_LENGTH, DEFAULT_ALGORITHM, DEFAULT_IV_LENGTH, DEFAULT_SALT_LENGTH);
   }
 
   /**
@@ -133,7 +133,7 @@ public class AESUtility {
     bb.get(iv);
     this.iv = iv;
 
-    byte[] salt = new byte[SALT_LENGTH];
+    byte[] salt = new byte[DEFAULT_SALT_LENGTH];
     bb.get(salt);
     this.salt = salt;
 
@@ -148,7 +148,7 @@ public class AESUtility {
   }
 
   public byte[] genSalt() {
-    return this.random.generateRandomBytes(SALT_LENGTH);
+    return this.random.generateRandomBytes(DEFAULT_SALT_LENGTH);
   }
 
   public static byte[] stringToBytes(String plaintext) {
