@@ -34,15 +34,15 @@ public class AESUtility implements AESSpecs {
 	private KeyGenerator generator;
 
   public AESUtility() {
-    initKeyGen();
+    this.initKeyGen();
   }
 
   public AESUtility(CIPHER_MODE mode) {
-    initKeyGen();
+    this.initKeyGen();
     switch(mode) {
-      case IV_ONLY:   this.createDataIV();   break;
-      case IV_SALT:   this.createDataSalt(); break;
-      default:        this.createDataIV();   break;
+      case IV_ONLY: createDataIV(); break;
+      case IV_SALT: createDataSalt(); break;
+      default: createDataIV(); break;
     }
   }
 
@@ -74,6 +74,10 @@ public class AESUtility implements AESSpecs {
     if (isNull(this.generator)) { System.exit(1); }
     return this.generator.generateKey();
   }
+
+  public void createDataIV()    { this.data = new Data(genIV(), null, genKey()); }
+  public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); }
+  public void createData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
 
   public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
     KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
@@ -124,9 +128,9 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  public void createDataIV()    { this.data = new Data(genIV(), null, genKey()); }
-  public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); }
-  public void createData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
+  //public void createDataIV()    { this.data = new Data(genIV(), null, genKey()); }
+  //public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); }
+  //public void createData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
 
   //public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
   //this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
