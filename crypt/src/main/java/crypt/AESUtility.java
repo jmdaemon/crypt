@@ -67,6 +67,7 @@ public class AESUtility {
   private void init(boolean withIV, boolean withSalt, int aesKeyLength, String algorithm) {
     // Initializes the AES Key generator with the provided defaults
     this.initKeyGen(aesKeyLength, "AES");
+    this.setAlgorithm(algorithm);
     this.setKeyLength(aesKeyLength);
     this.setIV(withIV ? genIV() : null);
     this.setSalt(withSalt ? genSalt() : null);
@@ -164,7 +165,7 @@ public class AESUtility {
    * @throws Exception
   */
   private Cipher initCipher(int cipherMode) throws Exception {
-    Cipher result = Cipher.getInstance(DEFAULT_ALGORITHM);
+    Cipher result = Cipher.getInstance(this.getAlgorithm());
     // Note that the tag length bit used for the GCMParameterSpec is always half the aes key length
     result.init(cipherMode, this.getKey(), new GCMParameterSpec(this.getAesKeyLength() / 2, this.getIV()));
     return result;
