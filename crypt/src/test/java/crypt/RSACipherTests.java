@@ -1,42 +1,24 @@
-//package test.crypt.cipher.rsa;
 package crypt;
 
-import crypt.*;
-import crypt.rsa.*;
-
 import static org.junit.jupiter.api.Assertions.*; 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 
 public class RSACipherTests {
+  private RSACipher cipher;
 
-  private RSACipher rsa = new RSACipher();
+  @BeforeEach
+  public void setUp() {
+    this.cipher = new RSACipher();
+  }
 
   @Test
   public void genKey_RSA_ReturnRSAKeyPair() throws NoSuchAlgorithmException {
-    KeyPair RSAKey = rsa.genKeyPair();
+    KeyPair RSAKey = this.cipher.genKeyPair();
     assertNotNull(RSAKey, "RSA Key should be initialized");
     assertNotNull(RSAKey.getPrivate(), "KeyPair should have a private key");
     assertNotNull(RSAKey.getPublic(), "KeyPair should have a public key");
   }
-
-  //public void encrypt_SaltPlaintext_ReturnAESCiphertext(){
-  //}
-
-  //public void decrypt_Salt_(){
-  //}
-
-  //public void encrypt_IV_(){
-  //}
-
-  //public void decryptIV_(){
-  //}
-
-  //public void encrypt_IVSalt_(){
-  //}
-
-  //public void decryptIVSALT_(){
-  //}
 }
