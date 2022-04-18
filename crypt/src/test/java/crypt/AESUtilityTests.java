@@ -1,7 +1,6 @@
 package crypt;
 
 import static crypt.CryptUtility.*;
-import crypt.data.*;
 import crypt.*;
 import crypt.CIPHER_MODE;
 
