@@ -17,8 +17,8 @@ public class AESUtilityTests {
   @BeforeEach 
   public void setUp() {
     this.cipher = new AESUtility();
-    this.cipherIV = new AESUtility(true, false, false);
-    this.cipherSalt = new AESUtility(true, true, true);
+    this.cipherIV = new AESUtility(true, false, false, "");
+    this.cipherSalt = new AESUtility(true, true, true, "");
   }
 
   @Test

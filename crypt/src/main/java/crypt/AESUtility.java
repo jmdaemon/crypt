@@ -45,24 +45,14 @@ public class AESUtility implements AESSpecs {
     * 
     * These constructors provide different defaults:
     * - Default constructor   : Initialize the AESUtility with an IV and salt
-    * - Normal constructor    : Initialize the AESUtility with the specified options
-    * - Password constructor  : Initialize the AESUtility with the specified options and a password key
+    * - Normal constructor    : Initialize the AESUtility with the specified options and/or a password key
     */
   public AESUtility() {
     init(true, true, false, "");
   }
-  /**
-   * Normal AESUtility constructor
-   * @param withIV Generate an initilization vector
-   * @param withSalt Generate a salt
-   * @param withPassword Generate a normal key or a key derived from a hashed password
-  */
-  public AESUtility(boolean withIV, boolean withSalt, boolean withPassword) {
-    init(withIV, withSalt, withPassword, "");
-  }
 
   /**
-   * Password AESUtility constructor
+   * Normal AESUtility constructor
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
    * @param withPassword Generate a normal key or a key derived from a hashed password
