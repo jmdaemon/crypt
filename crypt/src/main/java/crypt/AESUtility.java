@@ -209,7 +209,7 @@ public class AESUtility {
    * Initializes the cipher in either encryption/decryption mode
    * @param cipherMode Either Cipher.ENCRYPT_MODE or Cipher.DECRYPT_MODE
    * @return The initialized cipher
-   * @throws Exception
+   * @throws Exception A general exception
   */
   private Cipher initCipher(int cipherMode) throws Exception {
     Cipher result = Cipher.getInstance(this.getAlgorithm());
@@ -223,7 +223,7 @@ public class AESUtility {
    * @param plaintext The data message to encrypt
    * @param withHeader Pack data message into a header containing the iv and salt
    * @return The encrypted ciphertext
-   * @throws Exception
+   * @throws Exception A general exception
   */
   public String encrypt(String plaintext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
@@ -237,7 +237,7 @@ public class AESUtility {
    * @param ciphertext The encrypted ciphertext
    * @param withHeader Unpack data message from a header containing the iv and the salt
    * @return The unencrypted plaintext message
-   * @throws Exception
+   * @throws Exception A general exception
   */
   public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
