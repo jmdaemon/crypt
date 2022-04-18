@@ -23,7 +23,7 @@ import java.util.Base64;
 
 public class AESUtility {
   // AES Utility defaults
-  private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
+  private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
   private static final int AES_KEY_LENGTH = 256;
   private static final int TAG_LENGTH_BIT = 128;
 
@@ -47,7 +47,7 @@ public class AESUtility {
     * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true, AES_KEY_LENGTH, AES_ALGORITHM);
+    init(true, true, AES_KEY_LENGTH, DEFAULT_ALGORITHM);
   }
 
   /**
@@ -159,7 +159,7 @@ public class AESUtility {
   }
 
   private Cipher initCipher(int cipherMode) throws Exception {
-    Cipher result = Cipher.getInstance(AES_ALGORITHM);
+    Cipher result = Cipher.getInstance(DEFAULT_ALGORITHM);
     result.init(cipherMode, this.getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, this.getIV()));
     return result;
   }

@@ -1,7 +1,5 @@
 package crypt;
 
-//import static crypt.CryptUtility.*;
-
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
 
