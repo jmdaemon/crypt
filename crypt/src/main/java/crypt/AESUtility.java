@@ -37,7 +37,6 @@ interface AESSpecs {
 }
 
 public class AESUtility implements AESSpecs {
-  //private Data data;
   private byte[] iv;
   private byte[] salt;
 	private KeyGenerator generator;
@@ -45,17 +44,12 @@ public class AESUtility implements AESSpecs {
 
   public AESUtility() {
     this.initKeyGen();
-    this.iv = genIV();
-    this.salt = genSalt();
-    this.key = this.generator.generateKey();
+    init(genIV(), genSalt(), this.generator.generateKey());
   }
 
   public AESUtility(boolean withIV, boolean withSalt) {
     this.initKeyGen();
-    this.iv = (withIV) ? genIV() : null;
-    this.salt = (withSalt) ? genSalt() : null;
-    this.key = this.generator.generateKey();
-    //this.data = new Data(iv, salt, key);
+    init(withIV, withSalt, this.generator.generateKey());
   }
 
   public AESUtility(boolean withIV, boolean withSalt, String password) {
@@ -63,7 +57,18 @@ public class AESUtility implements AESSpecs {
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
     this.key = genPswdKey(password, salt);
-    //this.data = new Data(iv, salt, key);
+  }
+
+  private void init(boolean withIV, boolean withSalt, SecretKey key) {
+    this.iv = (withIV) ? genIV() : null;
+    this.salt = (withSalt) ? genSalt() : null;
+    this.key = key;
+  }
+
+  private void init(byte[] iv, byte[] salt, SecretKey key) {
+    this.iv = iv;
+    this.salt = salt;
+    this.key = key;
   }
 
   // Initializes the AES Key generator with the provided defaults
@@ -90,35 +95,24 @@ public class AESUtility implements AESSpecs {
     return this.generator.generateKey();
   }
 
-  //public void init(boolean withIV, boolean withSalt, SecretKey key) {
-    //byte[] iv = (withIV) ? genIV() : null;
-    //byte[] salt = (withSalt) ? genSalt() : null;
-    ////this.data = new Data(iv, salt, key);
-  //}
 
-  //public static byte[] genHeader(byte[] ciphertext) throws IOException {
   public byte[] genHeader(byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
-    //output.write(Data.iv);
     output.write(this.iv);
-    //if (Data.salt != null) { output.write(Data.salt); }
     if (this.salt != null) { output.write(this.salt); }
     output.write(ciphertext);
     byte[] result = output.toByteArray();
     return result;
   }
 
-  //public static byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
   public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
     byte[] iv = new byte[CryptUtility.IV_LENGTH];
     bb.get(iv);
-    //Data.iv = iv;
     this.iv = iv;
 
     byte[] salt = new byte[CryptUtility.SALT_LENGTH];
     bb.get(salt);
-    //Data.salt = salt;
     this.salt = salt;
 
     byte[] result = new byte[bb.remaining()];
@@ -136,13 +130,11 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  //public static byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
   public byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
     byte[] result = parseHeader(decodedCiphertext);
     return result;
   }
-
 
   public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
     KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
@@ -151,7 +143,6 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  //public static SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
   public static SecretKey genPswdKey(String pswd, byte[] salt) {
     SecretKey result = null;
     try {
@@ -165,7 +156,6 @@ public class AESUtility implements AESSpecs {
 
   private Cipher initCipher(int cipherMode) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
-    //result.init(cipherMode, getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, getIV()));
     result.init(cipherMode, this.getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, this.getIV()));
     return result;
   }
@@ -178,9 +168,7 @@ public class AESUtility implements AESSpecs {
 
   public String encryptWithHeader(String plaintext) throws Exception {
     byte[] ciphertext = encrypt(plaintext);
-    //byte[] result = data.genHeader(ciphertext);
     byte[] result = genHeader(ciphertext);
-    //return data.encodeBase64(result);
     return encodeBase64(result);
   }
 
@@ -191,29 +179,14 @@ public class AESUtility implements AESSpecs {
   }
 
   public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
-    //byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader);
     byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
     String result = decrypt(ciphertext);
     return result;
   }
 
-  //public void createDataIV()    { this.data = new Data(genIV(), null, genKey()); }
-  //public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); }
-  //public void createData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
-
-  //public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-  //this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
-  //}
-
-  //public byte[] getSalt()   { return data.getSalt();  }
-  //public byte[] getIV()     { return data.getIV();    }
-  //public SecretKey getKey() { return data.getKey();   }
-  //public KeyGenerator getKeyGen() { return this.keyGen; }
   public byte[] getSalt()   { return this.salt;  }
   public byte[] getIV()     { return this.iv;    }
   public SecretKey getKey() { return this.key;   }
 
-
-  //public void setKey(SecretKey key) { data.setKey(key); }
   public void setKey(SecretKey key) { this.setKey(key); }
   }
