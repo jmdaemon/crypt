@@ -31,37 +31,30 @@ interface AESSpecs {
 
 public class AESUtility implements AESSpecs {
   private Data data;
-  //private static KeyGenerator keyGen = initKeyGen();
-  //private AesKeyGenerator generator;
 	private KeyGenerator generator;
 
   public AESUtility() {
-    //this.initKeyGen();
     initKeyGen();
-    //this.generator = new AesKeyGenerator();
   }
 
   public AESUtility(CIPHER_MODE mode) {
     initKeyGen();
-    //this.generator = new AesKeyGenerator();
     switch(mode) {
       case IV_ONLY:   this.createDataIV();   break;
       case IV_SALT:   this.createDataSalt(); break;
       default:        this.createDataIV();   break;
     }
-    //this.initKeyGen();
   }
 
   public AESUtility(String pswd) {
-    //this.generator = new AesKeyGenerator();
-    initKeyGen();
+    this.initKeyGen();
     this.createData(pswd);
-    //this.initKeyGen();
   }
 
+  // Initializes the AES Key generator with the provided defaults
   private void initKeyGen() {
-    initKeyGen(AES_KEY_LENGTH, "AES");
-    }
+    this.initKeyGen(AES_KEY_LENGTH, "AES");
+  }
 
   // Initializes the AES key generator
 	private void initKeyGen(int keyLength, String algorithm) {
@@ -75,36 +68,10 @@ public class AESUtility implements AESSpecs {
     }
   }
 
-  //public void initKeyGen() throws NoSuchAlgorithmException {
-  //public void initKeyGen() {
-  //public static KeyGenerator initKeyGen() {
-    ////this.keyGen = this.getKeyGen();
-    ////this.keyGen = this.getKeyGen();
-    ////this.keyGen = null;
-    ////KeyGenerator keyGen = this.getKeyGen();
-    //KeyGenerator keyGen = null;
-    //try {
-      ////this.keyGen = KeyGenerator.getInstance("AES");
-      ////this.keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
-      //keyGen = KeyGenerator.getInstance("AES");
-      //keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
-      ////this.keyGen = keyGen;
-    //} catch (Exception e) {
-      //e.printStackTrace();
-    //}
-    //return keyGen;
-  //}
-
   // Generate the AES key 
   public SecretKey genKey() {
-    //initKeyGen();
     // Ensure the key generator is not null
-    //if (isNull(this.keyGen)) { System.exit(1); }
-    //if (isNull(this.getKeyGen())) { System.exit(1); }
-    //SecretKey key = this.keyGen.generateKey();
-    //return this.getKeyGen().generateKey();
-    //return key;
-    //return this.generator.generate();
+    if (isNull(this.generator)) { System.exit(1); }
     return this.generator.generateKey();
   }
 
