@@ -2,29 +2,20 @@ package crypt;
 
 import static crypt.CryptUtility.*;
 
-import crypt.*;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.KeyGenerator;
-import javax.crypto.KeyGeneratorSpi;
 
 import java.security.SecureRandom;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 
 import java.util.Base64;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.io.IOException;
-
-import static java.util.Objects.isNull;
 
 interface AESSpecs {
   static final String AES_ALGORITHM = "AES/GCM/NoPadding";
@@ -90,8 +81,8 @@ public class AESUtility implements AESSpecs {
     KeyGenerator keyGen = null;
     try {
       keyGen = KeyGenerator.getInstance(algorithm);
-        keyGen.init(keyLength, SecureRandom.getInstanceStrong());
-        this.generator = keyGen;
+      keyGen.init(keyLength, SecureRandom.getInstanceStrong());
+      this.generator = keyGen;
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
     }
@@ -99,8 +90,6 @@ public class AESUtility implements AESSpecs {
 
   // Generate the AES key 
   public SecretKey genKey() {
-    // Ensure the key generator is not null
-    if (isNull(this.generator)) { System.exit(1); }
     return this.generator.generateKey();
   }
 
@@ -157,5 +146,4 @@ public class AESUtility implements AESSpecs {
     byte[] result = cipher.doFinal(cipherstring);
     return new String(result, UTF_8);
   }
-
-  }
+}
