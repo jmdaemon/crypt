@@ -32,7 +32,9 @@ public class AESUtilityTests {
 
   @Test
   public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
-    assertNotNull(cipher.genKey());
+    SecretKey key = cipher.genKey();
+    //assertNotNull(cipher.genKey());
+    assertNotNull(key);
   }
 
   @Test

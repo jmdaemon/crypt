@@ -31,13 +31,16 @@ interface AESSpecs {
 
 public class AESUtility implements AESSpecs {
   private Data data;
-  private static KeyGenerator keyGen = initKeyGen();
+  //private static KeyGenerator keyGen = initKeyGen();
+  private AesKeyGenerator generator;
 
   public AESUtility() {
     //this.initKeyGen();
+    this.generator = new AesKeyGenerator();
   }
 
   public AESUtility(CIPHER_MODE mode) {
+    this.generator = new AesKeyGenerator();
     switch(mode) {
       case IV_ONLY:   this.createDataIV();   break;
       case IV_SALT:   this.createDataSalt(); break;
@@ -47,6 +50,7 @@ public class AESUtility implements AESSpecs {
   }
 
   public AESUtility(String pswd) {
+    this.generator = new AesKeyGenerator();
     this.createData(pswd);
     //this.initKeyGen();
   }
@@ -79,9 +83,10 @@ public class AESUtility implements AESSpecs {
     // Ensure the key generator is not null
     //if (isNull(this.keyGen)) { System.exit(1); }
     //if (isNull(this.getKeyGen())) { System.exit(1); }
-    SecretKey key = this.keyGen.generateKey();
+    //SecretKey key = this.keyGen.generateKey();
     //return this.getKeyGen().generateKey();
-    return key;
+    //return key;
+    return this.generator.generate();
   }
 
   public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -144,7 +149,7 @@ public class AESUtility implements AESSpecs {
   public byte[] getSalt()   { return data.getSalt();  }
   public byte[] getIV()     { return data.getIV();    }
   public SecretKey getKey() { return data.getKey();   }
-  public KeyGenerator getKeyGen() { return this.keyGen; }
+  //public KeyGenerator getKeyGen() { return this.keyGen; }
 
   public void setKey(SecretKey key) { data.setKey(key); }
   }
