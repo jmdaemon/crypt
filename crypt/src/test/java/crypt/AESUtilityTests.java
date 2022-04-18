@@ -1,8 +1,8 @@
-package crypt.aes;
+package crypt;
 
 import static crypt.CryptUtility.*;
 import crypt.data.*;
-import crypt.aes.*;
+import crypt.*;
 import crypt.CIPHER_MODE;
 
 import static org.junit.jupiter.api.Assertions.*; 

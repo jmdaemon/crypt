@@ -1,7 +1,6 @@
-package crypt.aes;
+package crypt;
 
 import static crypt.CryptUtility.*;
-//import crypt.data.*;
 
 import crypt.*;
 import crypt.CIPHER_MODE;
@@ -67,8 +66,7 @@ public class AESUtility implements AESSpecs {
 
   private void init(byte[] iv, byte[] salt, SecretKey key) {
     this.iv = iv;
-    this.salt = salt;
-    this.key = key;
+    this.salt = salt; this.key = key;
   }
 
   // Initializes the AES Key generator with the provided defaults
