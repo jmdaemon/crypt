@@ -2,11 +2,16 @@ package crypt;
 
 // Third Party Packages
 import toolbox.RandomUtility;
+//import static toolbox.Toolbox.*;
+import static toolbox.Toolbox.stringToBytes;
+import static toolbox.Toolbox.bytesToString;
+import static toolbox.Toolbox.b64encode;
+import static toolbox.Toolbox.b64decode;
 
 // Standard Library
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+//import java.nio.charset.Charset;
+//import java.nio.charset.StandardCharsets;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -19,7 +24,7 @@ import java.security.spec.InvalidKeySpecException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
+//import java.util.Base64;
 
 public class AESUtility {
   // Class Fields
@@ -82,7 +87,6 @@ public class AESUtility {
 
     this.setKeyLength(aesKeyLength);
     this.setKey(this.generator.generateKey());
-
 
   }
 
@@ -153,25 +157,6 @@ public class AESUtility {
     return this.random.generateRandomBytes(this.getSaltLength());
   }
 
-  public static byte[] stringToBytes(String plaintext) {
-    return plaintext.getBytes(StandardCharsets.UTF_8);
-  }
-
-  public static String bytesToString(byte[] hash) {
-    String result = new String(hash, StandardCharsets.UTF_8);
-    return result;
-  }
-
-  public static String b64encode(byte[] ciphertext) {
-    String result = Base64.getEncoder().encodeToString(ciphertext);
-    return result;
-  }
-
-  public static byte[] b64decode(String ciphertext) {
-    byte[] result = Base64.getDecoder().decode(ciphertext.getBytes(StandardCharsets.UTF_8));
-    return result;
-  }
-
   /**
    * Initializes the cipher in either encryption/decryption mode
    * @param cipherMode Either Cipher.ENCRYPT_MODE or Cipher.DECRYPT_MODE
@@ -196,6 +181,7 @@ public class AESUtility {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] cipherstring = (withHeader) ? parseHeader(b64decode(ciphertext)) : b64decode(ciphertext);
     byte[] result = cipher.doFinal(cipherstring);
-    return new String(result, StandardCharsets.UTF_8);
+    //return new String(result, StandardCharsets.UTF_8);
+    return bytesToString(result);
   }
 }
