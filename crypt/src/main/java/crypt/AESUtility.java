@@ -37,6 +37,7 @@ public class AESUtility implements AESSpecs {
   private byte[] salt;
 	private KeyGenerator generator;
   private SecretKey key;
+  private int keyLength;
 
   /**
     * AESUtility constructors
@@ -58,13 +59,31 @@ public class AESUtility implements AESSpecs {
     init(withIV, withSalt, keyLength);
   }
 
+  /**
+   * Initializes the AESUtility
+   * @param withIV Generate an initilization vector
+   * @param withSalt Generate a salt
+   * @param keyLength The The key length to use for the AES cipher key.
+  */
   private void init(boolean withIV, boolean withSalt, int keyLength) {
     // Initializes the AES Key generator with the provided defaults
     this.initKeyGen(keyLength, "AES");
-    this.iv = (withIV) ? genIV() : null;
-    this.salt = (withSalt) ? genSalt() : null;
-    this.key = this.generator.generateKey();
+    this.setKeyLength(keyLength);
+    this.setIV(withIV ? genIV() : null);
+    this.setSalt(withSalt ? genSalt() : null);
+    this.setKey(this.generator.generateKey());
   }
+
+  // Getters
+  public byte[] getSalt()   { return this.salt;  }
+  public byte[] getIV()     { return this.iv;    }
+  public SecretKey getKey() { return this.key;   }
+
+  // Setters
+  public void setKey(SecretKey key) { this.key = key; }
+  public void setIV(byte[] iv)      { this.iv = iv; }
+  public void setSalt(byte[] salt)  { this.salt = salt; }
+  public void setKeyLength(int keyLength)  { this.keyLength = keyLength; }
 
   // Initializes the AES key generator
 	private void initKeyGen(int keyLength, String algorithm) {
@@ -139,13 +158,4 @@ public class AESUtility implements AESSpecs {
     return new String(result, UTF_8);
   }
 
-  // Getters
-  public byte[] getSalt()   { return this.salt;  }
-  public byte[] getIV()     { return this.iv;    }
-  public SecretKey getKey() { return this.key;   }
-
-  // Setters
-  public void setKey(SecretKey key) { this.key = key; }
-  public void setIV(byte[] iv)      { this.iv = iv; }
-  public void setSalt(byte[] salt)  { this.salt = salt; }
   }
