@@ -158,7 +158,7 @@ public class AESUtility {
    * Pack the ciphertext into a byte header containing the IV and the salt
    * @param ciphertext The encrypted ciphertext
    * @return A byte[] containing the packed IV and salt.
-   * @throws IOException
+   * @throws IOException An IOException is thrown if output is unable to be written to
   */
   public byte[] createHeader(byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -173,10 +173,8 @@ public class AESUtility {
    * Unpacks the header into a byte array containing the plaintext
    * @param decodedCiphertext The decoded base64 byte header
    * @return The decrypted plaintext
-   * @throws NoSuchAlgorithmException
-   * @throws InvalidKeySpecException
   */
-  public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public byte[] parseHeader(byte[] decodedCiphertext) {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
     byte[] iv = new byte[this.getIVLength()];
     bb.get(iv);
@@ -193,7 +191,7 @@ public class AESUtility {
 
   /**
    * Generate the Initilization Vector (IV)
-   * @return
+   * @return The initialization vector
   */
   public byte[] genIV() {
     return this.random.generateRandomBytes(this.getIVLength());
@@ -201,7 +199,7 @@ public class AESUtility {
 
   /**
    * Generate the salt
-   * @return
+   * @return The salt array
   */
   public byte[] genSalt() {
     return this.random.generateRandomBytes(this.getSaltLength());
