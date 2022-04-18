@@ -3,6 +3,7 @@ package crypt.aes;
 import static crypt.CryptUtility.*;
 import crypt.data.*;
 import crypt.aes.*;
+import crypt.CIPHER_MODE;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;

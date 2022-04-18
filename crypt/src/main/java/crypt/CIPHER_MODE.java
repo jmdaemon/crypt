@@ -1,4 +1,4 @@
-package crypt.aes;
+package crypt;
 
 public enum CIPHER_MODE {
   IV_ONLY,

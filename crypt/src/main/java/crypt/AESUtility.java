@@ -2,6 +2,7 @@ package crypt.aes;
 
 import static crypt.CryptUtility.*;
 import crypt.data.*;
+import crypt.CIPHER_MODE;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
