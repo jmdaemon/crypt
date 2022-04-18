@@ -22,19 +22,21 @@ import java.io.IOException;
 public class AESUtility {
   /**
     * Encrypt and decrypt messages with the Advanced Encryption Standard
-    * 
-    * Defaults
-    * Default Algorithm   : "AES/GCM/NoPadding"
-    * Default Key Length  : 256 
-    * Default IV Length   : 12
-    * Default Salt Length : 16
     */
 
   // Class Fields
   // AES Utility defaults
+
+  /** Default AES algorithm: AES/GCM/NoPadding */
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
+
+  /** Default AES key length: 256 */
   private static final int DEFAULT_KEY_LENGTH = 256;
+
+  /** Default AES IV length: 12 */
   public static final int DEFAULT_IV_LENGTH = 12;
+
+  /** Default AES Salt length: 16 */
   public static final int DEFAULT_SALT_LENGTH = 16;
 
   // Instance Fields
