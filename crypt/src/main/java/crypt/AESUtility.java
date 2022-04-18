@@ -3,7 +3,6 @@ package crypt;
 import static crypt.CryptUtility.*;
 
 import crypt.*;
-//import crypt.CIPHER_MODE;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -94,7 +93,7 @@ public class AESUtility implements AESSpecs {
   }
 
 
-  public byte[] genHeader(byte[] ciphertext) throws IOException {
+  public byte[] createHeader(byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     output.write(this.iv);
     if (this.salt != null) { output.write(this.salt); }
@@ -161,7 +160,7 @@ public class AESUtility implements AESSpecs {
   public String encrypt(String plaintext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
     byte[] ciphertext = cipher.doFinal(stringToBytes(plaintext));
-    String result = (withHeader) ? encodeBase64(genHeader(ciphertext)) : encodeBase64(ciphertext);
+    String result = (withHeader) ? encodeBase64(createHeader(ciphertext)) : encodeBase64(ciphertext);
     return result;
   }
 
