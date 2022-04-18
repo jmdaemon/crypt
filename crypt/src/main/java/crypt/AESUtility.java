@@ -114,13 +114,13 @@ public class AESUtility implements AESSpecs {
     return result;
   }
 
-  public static byte[] decodeBase64(String ciphertext) {
+  public static byte[] b64decode(String ciphertext) {
     byte[] result = Base64.getDecoder().decode(ciphertext.getBytes(UTF_8));
     return result;
   }
 
   public byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
+    byte[] decodedCiphertext = b64decode(ciphertextWithHeader);
     byte[] result = parseHeader(decodedCiphertext);
     return result;
   }
@@ -140,7 +140,7 @@ public class AESUtility implements AESSpecs {
 
   public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
-    byte[] cipherstring = (withHeader) ? decodeCiphertext(ciphertext) : decodeBase64(ciphertext);
+    byte[] cipherstring = (withHeader) ? decodeCiphertext(ciphertext) : b64decode(ciphertext);
     byte[] result = cipher.doFinal(cipherstring);
     return new String(result, UTF_8);
   }
