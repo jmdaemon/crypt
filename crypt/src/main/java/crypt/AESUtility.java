@@ -161,21 +161,14 @@ public class AESUtility implements AESSpecs {
   public String encrypt(String plaintext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
     byte[] ciphertext = cipher.doFinal(stringToBytes(plaintext));
-    //String result = (withHeader) ? encodeBase64(genHeader(ciphertext)) : bytesToString(ciphertext);
     String result = (withHeader) ? encodeBase64(genHeader(ciphertext)) : encodeBase64(ciphertext);
     return result;
   }
 
-  //public String encryptWithHeader(String plaintext) throws Exception {
-    //byte[] ciphertext = encrypt(plaintext);
-    //byte[] result = genHeader(ciphertext);
-    //return encodeBase64(result);
-  //}
-
   //public String decrypt(byte[] ciphertext) throws Exception {
-  public String decrypt(String ciphertext) throws Exception {
+  public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
-    byte[] cipherstring = decodeBase64(ciphertext);
+    byte[] cipherstring = (withHeader) ? decodeCiphertext(ciphertext) : decodeBase64(ciphertext);
     byte[] result = cipher.doFinal(cipherstring);
     return new String(result, UTF_8);
   }

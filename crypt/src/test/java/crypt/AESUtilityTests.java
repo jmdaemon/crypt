@@ -63,20 +63,20 @@ public class AESUtilityTests {
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
     String ciphertext = cipher.encrypt("This is the plaintext", false);
     //assertEquals("This is the plaintext", cipher.decrypt(stringToBytes(ciphertext)));
-    assertEquals("This is the plaintext", cipher.decrypt(ciphertext));
+    assertEquals("This is the plaintext", cipher.decrypt(ciphertext, false));
   }
 
-  //@Test 
-  //public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    //String res = cipherSalt.decryptWithHeader(cipherSalt.encrypt("This is the plaintext", true));
-    //assertEquals("This is the plaintext", res);
-  //}
+  @Test 
+  public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
+    String res = cipherSalt.decrypt(cipherSalt.encrypt("This is the plaintext", true), true);
+    assertEquals("This is the plaintext", res);
+  }
 
-  //@Test 
-  //public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    //AESUtility cipherSaltPass = new AESUtility(true, true, "password");
-    //String ciphertext = cipherSaltPass.encrypt("This is the plaintext", true);
-    //assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
-  //}
+  @Test 
+  public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
+    AESUtility cipherSaltPass = new AESUtility(true, true, "password");
+    String ciphertext = cipherSaltPass.encrypt("This is the plaintext", true);
+    assertEquals("This is the plaintext", cipherSaltPass.decrypt(ciphertext, true));
+  }
   
 }
