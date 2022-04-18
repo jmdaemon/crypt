@@ -20,6 +20,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class AESUtility {
+  /**
+    * Encrypt and decrypt messages with the Advanced Encryption Standard
+    * 
+    * Defaults
+    * Default Algorithm   : "AES/GCM/NoPadding"
+    * Default Key Length  : 256 
+    * Default IV Length   : 12
+    * Default Salt Length : 16
+    */
+
   // Class Fields
   // AES Utility defaults
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
@@ -101,7 +111,11 @@ public class AESUtility {
   public void setIVLength(int ivLength)       { this.ivLength = ivLength; }
   public void setSaltLength(int saltLength)   { this.saltLength = saltLength; }
 
-  // Initializes the AES key generator
+  /**
+   * Initializes the AES key generator
+   * @param aesKeyLength The length of key to use for the AES algorithm. Default: 256.
+   * @param algorithm The specific AES algorithm implementation to use. Default: AES/GCM/NoPadding.
+  */
 	private void initKeyGen(int aesKeyLength, String algorithm) {
     KeyGenerator keyGen = null;
     try {
@@ -113,11 +127,20 @@ public class AESUtility {
     }
   }
 
-  // Generate the AES key 
+  /**
+   * Generate the symmetric AES key 
+   * @return The generated AES key from the specified AES implementation
+  */
   public SecretKey genKey() {
     return this.generator.generateKey();
   }
 
+  /**
+   * Pack the ciphertext into a byte header containing the IV and the salt
+   * @param ciphertext The encrypted ciphertext
+   * @return A byte[] containing the packed IV and salt.
+   * @throws IOException
+  */
   public byte[] createHeader(byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     output.write(this.iv);
@@ -127,6 +150,13 @@ public class AESUtility {
     return result;
   }
 
+  /**
+   * Unpacks the header into a byte array containing the plaintext
+   * @param decodedCiphertext The decoded base64 byte header
+   * @return The decrypted plaintext
+   * @throws NoSuchAlgorithmException
+   * @throws InvalidKeySpecException
+  */
   public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
     byte[] iv = new byte[this.getIVLength()];
@@ -142,10 +172,18 @@ public class AESUtility {
     return result;
   }
 
+  /**
+   * Generate the Initilization Vector (IV)
+   * @return
+  */
   public byte[] genIV() {
     return this.random.generateRandomBytes(this.getIVLength());
   }
 
+  /**
+   * Generate the salt
+   * @return
+  */
   public byte[] genSalt() {
     return this.random.generateRandomBytes(this.getSaltLength());
   }
@@ -163,6 +201,13 @@ public class AESUtility {
     return result;
   }
 
+  /**
+   * Returns the plaintext encrypted with the AES algorithm
+   * @param plaintext The data message to encrypt
+   * @param withHeader Pack data message into a header containing the iv and salt
+   * @return The encrypted ciphertext
+   * @throws Exception
+  */
   public String encrypt(String plaintext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
     byte[] ciphertext = cipher.doFinal(stringToBytes(plaintext));
@@ -170,6 +215,13 @@ public class AESUtility {
     return result;
   }
 
+  /**
+   * Returns the plaintext decrypted with the AES algorithm
+   * @param ciphertext The encrypted ciphertext
+   * @param withHeader Unpack data message from a header containing the iv and the salt
+   * @return The unencrypted plaintext message
+   * @throws Exception
+  */
   public String decrypt(String ciphertext, boolean withHeader) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] cipherstring = (withHeader) ? parseHeader(b64decode(ciphertext)) : b64decode(ciphertext);
