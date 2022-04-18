@@ -46,7 +46,7 @@ public class AESUtility implements AESSpecs {
     * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true);
+    init(true, true, AES_KEY_LENGTH);
   }
 
   /**
@@ -54,13 +54,13 @@ public class AESUtility implements AESSpecs {
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
   */
-  public AESUtility(boolean withIV, boolean withSalt) {
-    init(withIV, withSalt);
+  public AESUtility(boolean withIV, boolean withSalt, int keyLength) {
+    init(withIV, withSalt, keyLength);
   }
 
-  private void init(boolean withIV, boolean withSalt) {
+  private void init(boolean withIV, boolean withSalt, int keyLength) {
     // Initializes the AES Key generator with the provided defaults
-    this.initKeyGen(AES_KEY_LENGTH, "AES");
+    this.initKeyGen(keyLength, "AES");
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
     this.key = this.generator.generateKey();
