@@ -17,8 +17,8 @@ public class AESUtilityTests {
   @BeforeEach 
   public void setUp() {
     this.cipher = new AESUtility();
-    this.cipherIV = new AESUtility(true, false, false, "");
-    this.cipherSalt = new AESUtility(true, true, true, "");
+    this.cipherIV = new AESUtility(true, false);
+    this.cipherSalt = new AESUtility(true, true);
   }
 
   @Test
@@ -27,10 +27,10 @@ public class AESUtilityTests {
     assertNotNull(key);
   }
 
-  @Test
-  public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-    assertNotNull(cipherSalt.genPswdKey("This is the user password"));
-  }
+  //@Test
+  //public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
+    //assertNotNull(cipherSalt.genPswdKey("This is the user password"));
+  //}
   
   @Test
   public void encrypt_Plaintext_ReturnAESUtilitytext() throws Exception {
@@ -44,11 +44,11 @@ public class AESUtilityTests {
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
-  @Test
-  public void encrypt_SaltPlaintext_ReturnAESUtilitytext() throws Exception {
-    String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext")), true);
-    assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
-  }
+  //@Test
+  //public void encrypt_SaltPlaintext_ReturnAESUtilitytext() throws Exception {
+    //String res = cipherSalt.encrypt(bytesToString(cipherSalt.genPswdHash("This is the plaintext")), true);
+    //assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
+  //}
 
   @Test
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
@@ -64,7 +64,7 @@ public class AESUtilityTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    AESUtility cipherSaltPass = new AESUtility(true, true, true, "password");
+    AESUtility cipherSaltPass = new AESUtility(true, true);
     String ciphertext = cipherSaltPass.encrypt("This is the plaintext", true);
     assertEquals("This is the plaintext", cipherSaltPass.decrypt(ciphertext, true));
   }

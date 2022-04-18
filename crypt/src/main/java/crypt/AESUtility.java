@@ -28,9 +28,7 @@ import static java.util.Objects.isNull;
 
 interface AESSpecs {
   static final String AES_ALGORITHM = "AES/GCM/NoPadding";
-  static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
   static final int TAG_LENGTH_BIT = 128;
-  static final int ITERATION_COUNT = 65536;
   static final int AES_KEY_LENGTH = 256;
 }
 
@@ -45,28 +43,26 @@ public class AESUtility implements AESSpecs {
     * 
     * These constructors provide different defaults:
     * - Default constructor   : Initialize the AESUtility with an IV and salt
-    * - Normal constructor    : Initialize the AESUtility with the specified options and/or a password key
+    * - Normal constructor    : Initialize the AESUtility with the specified options
     */
   public AESUtility() {
-    init(true, true, false, "");
+    init(true, true);
   }
 
   /**
    * Normal AESUtility constructor
    * @param withIV Generate an initilization vector
    * @param withSalt Generate a salt
-   * @param withPassword Generate a normal key or a key derived from a hashed password
-   * @param password The password to hash
   */
-  public AESUtility(boolean withIV, boolean withSalt, boolean withPassword, String password) {
-    init(withIV, withSalt, withPassword, password);
+  public AESUtility(boolean withIV, boolean withSalt) {
+    init(withIV, withSalt);
   }
 
-  private void init(boolean withIV, boolean withSalt, boolean withPassword, String password) {
+  private void init(boolean withIV, boolean withSalt) {
     this.initKeyGen();
     this.iv = (withIV) ? genIV() : null;
     this.salt = (withSalt) ? genSalt() : null;
-    this.key = (withPassword) ? genPswdKey(password) : this.generator.generateKey();
+    this.key = this.generator.generateKey();
   }
 
   // Initializes the AES Key generator with the provided defaults
@@ -130,24 +126,6 @@ public class AESUtility implements AESSpecs {
   public byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
     byte[] result = parseHeader(decodedCiphertext);
-    return result;
-  }
-
-  public byte[] genPswdHash(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    KeySpec spec = new PBEKeySpec(pswd.toCharArray(), this.salt, ITERATION_COUNT, AES_KEY_LENGTH);
-    SecretKeyFactory factory = SecretKeyFactory.getInstance(HASH_ALGORITHM);
-    byte[] result = factory.generateSecret(spec).getEncoded();
-    return result;
-  }
-
-  public SecretKey genPswdKey(String pswd) {
-    SecretKey result = null;
-    try {
-      result = new SecretKeySpec(genPswdHash(pswd), "AES");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    if (isNull(result)) { System.exit(1); }
     return result;
   }
 
