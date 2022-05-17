@@ -3,6 +3,8 @@ package crypt;
 // Third Party Packages
 import toolbox.RandomUtility;
 import static toolbox.Toolbox.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // Standard Library
 import java.nio.ByteBuffer;
@@ -44,6 +46,9 @@ import java.io.IOException;
 public class AESUtility {
   // Class Fields
   // AES Utility defaults
+
+  // Logging utility 
+  private static final Logger log = LoggerFactory.getLogger("logback.example.App");
 
   /** Default AES algorithm: AES/GCM/NoPadding */
   private static final String DEFAULT_ALGORITHM = "AES/GCM/NoPadding";
@@ -110,18 +115,22 @@ public class AESUtility {
   */
   private void init(boolean withIV, boolean withSalt, int aesKeyLength, String algorithm, int ivLength, int saltLength) {
     // Initializes the AES Key generator with the provided defaults
+    log.debug("Initializing AES Utility");
     this.initKeyGen(aesKeyLength, "AES");
     this.setAlgorithm(algorithm);
+    log.debug("Initialized Key Generator");
 
     this.setIVLength(ivLength);
     this.setIV(withIV ? genIV() : null);
+    log.debug("Initialized IV");
 
     this.setSaltLength(saltLength);
     this.setSalt(withSalt ? genSalt() : null);
+    log.debug("Initialized Salt");
 
     this.setKeyLength(aesKeyLength);
     this.setKey(this.generator.generateKey());
-
+    log.debug("Initialized Key");
   }
 
   // Getters
@@ -165,7 +174,10 @@ public class AESUtility {
    * @return The generated AES key from the specified AES implementation
   */
   public SecretKey genKey() {
-    return this.generator.generateKey();
+    log.debug("Generating Key");
+    SecretKey key = this.generator.generateKey();
+    log.debug("Key: {}", key);
+    return key;
   }
 
   /**
@@ -176,9 +188,15 @@ public class AESUtility {
    * @throws IOException An IOException is thrown if output is unable to be written to
   */
   public byte[] createHeader(byte[] ciphertext) throws IOException {
+    log.debug("Creating Message");
     ByteArrayOutputStream output = new ByteArrayOutputStream();
+    log.debug("Writing IV to Message");
     output.write(this.iv);
-    if (this.salt != null) { output.write(this.salt); }
+    if (this.salt != null) {
+      log.debug("Writing Salt to Message");
+      output.write(this.salt);
+    }
+    log.debug("Writing CipherText to Message");
     output.write(ciphertext);
     byte[] result = output.toByteArray();
     return result;
@@ -192,14 +210,17 @@ public class AESUtility {
   */
   public byte[] parseHeader(byte[] decodedCiphertext) {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
+    log.debug("Parsing IV Message");
     byte[] iv = new byte[this.getIVLength()];
     bb.get(iv);
     this.iv = iv;
 
+    log.debug("Parsing Salt Message");
     byte[] salt = new byte[this.getSaltLength()];
     bb.get(salt);
     this.salt = salt;
 
+    log.debug("Parsing CipherText Message");
     byte[] result = new byte[bb.remaining()];
     bb.get(result);
     return result;
@@ -211,7 +232,10 @@ public class AESUtility {
    * @return The initialization vector
   */
   public byte[] genIV() {
-    return this.random.generateRandomBytes(this.getIVLength());
+    log.debug("Generating IV");
+    byte[] iv = this.random.generateRandomBytes(this.getIVLength());
+    log.debug("IV: {}", iv);
+    return iv;
   }
 
   /**
@@ -220,7 +244,10 @@ public class AESUtility {
    * @return The salt array
   */
   public byte[] genSalt() {
-    return this.random.generateRandomBytes(this.getSaltLength());
+    log.debug("Generating IV");
+    byte[] salt = this.random.generateRandomBytes(this.getSaltLength());
+    log.debug("Salt: {}", salt);
+    return salt;
   }
 
   /**
